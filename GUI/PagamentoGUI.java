@@ -43,18 +43,6 @@ public class PagamentoGUI extends JDialog {
 	private ControlloreInterfaccia controll;
 
 	/**
-	 * Launch the application.
-	public static void main(String[] args) {
-		try {
-			PagamentoGUI dialog = new PagamentoGUI();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	 */
-	/**
 	 * Create the dialog.
 	 */
 	public PagamentoGUI(ControlloreInterfaccia ctrl) {
@@ -323,6 +311,10 @@ public class PagamentoGUI extends JDialog {
 			JTextPane textPaneTotaleCatra = new JTextPane();
 			
 			JButton buttonPaga = new JButton("Paga");
+			buttonPaga.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			buttonPaga.setBackground(new Color(204, 204, 204));
 			
 			JLabel labelRiepilogoOrdine = new JLabel("Riepilogo ordine");
