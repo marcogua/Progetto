@@ -4,6 +4,12 @@ public class Pagamento {
     private double totale;
     private String dataAcquisto;
     private int puntiGenerati;
+    
+    public Pagamento() {
+    	this.totale = 0;
+    	this.dataAcquisto = null;
+    	this.puntiGenerati = 0;
+    }
 
     public Pagamento(double totale, String dataAcquisto, int puntiGenerati) {
         this.totale = totale;

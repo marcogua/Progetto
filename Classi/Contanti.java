@@ -3,6 +3,12 @@ package Classi;
 public class Contanti extends Pagamento{
     private double soldiRicevuti;
     private double resto;
+    
+    public Contanti() {
+    	super();
+    	this.soldiRicevuti = 0;
+    	this.resto = 0;
+    }
 
     public Contanti(double totale, String dataAcquisto, int puntiGenerati, double soldiRicevuti, double resto) {
         super(totale, dataAcquisto, puntiGenerati);

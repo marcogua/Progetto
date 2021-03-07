@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -510,64 +511,74 @@ public interface ControlloreInterfaccia {
 	void visualizzaTabellaFarinaceiCercaDataScadenza(JTable tabellaFarinacei, String dataScadenza);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaFrutta
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloFrutta(JTable tabellaFrutta, double quantita, JTable carello);
+	void aggiungiAlCarelloFrutta(JTable tabellaFrutta, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaVerdura
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloVerdura(JTable tabellaVerdura, double quantita, JTable carello);
+	void aggiungiAlCarelloVerdura(JTable tabellaVerdura, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaFarinacei
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloFarinacei(JTable tabellaFarinacei, double quantita, JTable carello);
+	void aggiungiAlCarelloFarinacei(JTable tabellaFarinacei, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaLatticini
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloLatticini(JTable tabellaLatticini, double quantita, JTable carello);
+	void aggiungiAlCarelloLatticini(JTable tabellaLatticini, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaUova
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloUova(JTable tabellaUova, double quantita, JTable carello);
+	void aggiungiAlCarelloUova(JTable tabellaUova, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param tabellaConfezionati
 	 * @param quantita
 	 * @param carello
+	 * @param listaProdotti
 	 */
-	void aggiungiAlCarelloConfezionati(JTable tabellaConfezionati, double quantita, JTable carello);
+	void aggiungiAlCarelloConfezionati(JTable tabellaConfezionati, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti);
 
 	/**
-	 *
+	 * 
 	 * @param carello
+	 * @param listCarrello
+	 * @param subTotale
 	 */
-	void svuotaCarello(JTable carello);
+	void svuotaCarello(JTable carello, ArrayList<Prodotto> listCarrello, JLabel subTotale);
 
 	/**
-	 *
+	 * 
 	 * @param carrello
+	 * @param listCarrello
+	 * @param subTotale
 	 */
-	void rimuoviProdottoCarrello(JTable carrello);
+	void rimuoviProdottoCarrello(JTable carrello, ArrayList<Prodotto> listCarrello, JLabel subTotale);
 
 	/**
 	 *
@@ -1308,6 +1319,12 @@ public interface ControlloreInterfaccia {
 	 */
 	void LeggiProdotto(Prodotto prodotto, JTextField codiceProdotto, JTextField Descrizione, JTextField Prezzo, JTextField proveninza,
 					   JTextField produttore, JTextField quantita, JComboBox unita, JTextField iva);
+
+	Carta aggiungiPagamentoCarta(JTextField codiceBancaRicevente, JTextField numeroCarta, JTextField cartaFedelta);
+
+	Contanti aggiungiPagamentoContanti(JTextField textContanti, JTextField cartaFedelta);
+
+	double calcolaSubTotale(ArrayList<Prodotto> carrelloArrayList, JLabel lblTotaleNumero);
 
 
 }

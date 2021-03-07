@@ -2,6 +2,7 @@ package Controllore;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
@@ -14,6 +15,7 @@ import DAO.TesseraPuntiDAO;
 import DAOImpl.*;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 import DbConfig.DbConnect;
 import GUI.*;
@@ -624,6 +626,7 @@ public class Controllore implements ControlloreInterfaccia  {
 					+ e.getMessage());
 		}
 	}
+	
 
 	public void visualizzaTabellaFrutta(JTable tabellaFrutta){
 		ArrayList<Frutta> fruttaArrayList = new ArrayList<>();
@@ -905,88 +908,117 @@ public class Controllore implements ControlloreInterfaccia  {
 		farinaceiDaoImp.modificaTabellaFarinacei(tabellaFarinacei,farinaceiArrayList);
 	}
 	
-	public void aggiungiAlCarelloFrutta(JTable tabellaFrutta, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow() , 1);
-		row[2]= tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow() , 8);
-		row[3]= tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void aggiungiAlCarelloVerdura(JTable tabellaVerdura, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow() , 1);
-		row[2]= tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow() , 8);
-		row[3]= tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void aggiungiAlCarelloFarinacei(JTable tabellaFarinacei, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow() , 1);
-		row[2]= tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow() , 8);
-		row[3]= tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void aggiungiAlCarelloLatticini(JTable tabellaLatticini, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow() , 1);
-		row[2]= tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow() , 8);
-		row[3]= tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void aggiungiAlCarelloUova(JTable tabellaUova, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaUova.getValueAt(tabellaUova.getSelectedRow() , 1);
-		row[2]= tabellaUova.getValueAt(tabellaUova.getSelectedRow() , 8);
-		row[3]= tabellaUova.getValueAt(tabellaUova.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void aggiungiAlCarelloConfezionati(JTable tabellaConfezionati, double quantita, JTable carello) {
-		int i =  carello.getRowCount();
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		model.setRowCount(i);
-		Object[] row = new Object[4];
-		row[0]= quantita;
-		row[1]= tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow() , 1);
-		row[2]= tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow() , 8);
-		row[3]= tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow() , 7);
-		model.addRow(row);
-	}
-	
-	public void svuotaCarello(JTable carello) {
-		DefaultTableModel model = (DefaultTableModel)carello.getModel();
-		for(int i= model.getRowCount() -1; i >= 0; i--) {
-		model.removeRow(i);
+	public void aggiungiAlCarelloFrutta(JTable tabellaFrutta, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 5).toString()) > quantita) {
+		Prodotto prodotto = new Prodotto(tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 0).toString(),
+				tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 1).toString(),
+				tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 2).toString(),
+				tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 7).toString()),
+				quantita, tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 6).toString(),
+				tabellaFrutta.getValueAt(tabellaFrutta.getSelectedRow(), 8).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
 		}
 	}
 	
-	public void rimuoviProdottoCarrello(JTable carrello) {
-		DefaultTableModel model = (DefaultTableModel)carrello.getModel();
-		model.removeRow(carrello.getSelectedRow());
+	public void aggiungiAlCarelloVerdura(JTable tabellaVerdura, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 5).toString()) >= quantita) {
+		Prodotto prodotto = new Prodotto(tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 0).toString(),
+				tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 1).toString(),
+				tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 2).toString(),
+				tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 7).toString()),
+				quantita, tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 6).toString(),
+				tabellaVerdura.getValueAt(tabellaVerdura.getSelectedRow(), 8).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
+		}
+	}
+	
+	public void aggiungiAlCarelloFarinacei(JTable tabellaFarinacei, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 5).toString()) >= quantita) {
+		Prodotto prodotto = new Prodotto(tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 0).toString(),
+				tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 1).toString(),
+				tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 2).toString(),
+				tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 7).toString()),
+				quantita, tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 6).toString(),
+				tabellaFarinacei.getValueAt(tabellaFarinacei.getSelectedRow(), 8).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
+		}
+	}
+	
+	public void aggiungiAlCarelloLatticini(JTable tabellaLatticini, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 7).toString()) >= quantita) {
+		Prodotto prodotto = new Prodotto(tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 0).toString(),
+				tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 1).toString(),
+				tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 2).toString(),
+				tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 9).toString()),
+				quantita, tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 8).toString(),
+				tabellaLatticini.getValueAt(tabellaLatticini.getSelectedRow(), 10).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
+		}
+		
+	}
+	
+	public void aggiungiAlCarelloUova(JTable tabellaUova, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 7).toString()) >= quantita) {
+		Prodotto prodotto = new Prodotto(tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 0).toString(),
+				tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 1).toString(),
+				tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 2).toString(),
+				tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 9).toString()),
+				quantita, tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 8).toString(),
+				tabellaUova.getValueAt(tabellaUova.getSelectedRow(), 10).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
+		}
+	}
+	
+	public void aggiungiAlCarelloConfezionati(JTable tabellaConfezionati, double quantita, JTable carello, ArrayList<Prodotto> listaProdotti) {
+		if(Double.parseDouble(tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 6).toString()) >= quantita) {
+		Prodotto prodotto = new Prodotto(tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 0).toString(),
+				tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 1).toString(),
+				tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 2).toString(),
+				tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 3).toString(),
+				Double.parseDouble(tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 8).toString()),
+				quantita, tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 7).toString(),
+				tabellaConfezionati.getValueAt(tabellaConfezionati.getSelectedRow(), 9).toString());
+		listaProdotti.add(prodotto);
+		visualizzaTabellaCarrello(listaProdotti, carello);
+		}
+	}
+	
+	public void svuotaCarello(JTable carello, ArrayList<Prodotto> listCarrello, JLabel subTotale) {
+		listCarrello.removeAll(listCarrello);
+		visualizzaTabellaCarrello(listCarrello, carello);
+		subTotale.setText("Nessuno");
+	}
+	
+	public void rimuoviProdottoCarrello(JTable carrello, ArrayList<Prodotto> listCarrello, JLabel subTotale) {
+		double totalePrima = Double.parseDouble(subTotale.getText());
+		double valoreDaSottrarre = ((listCarrello.get(carrello.getSelectedRow()).getPrezzo())* (listCarrello.get(carrello.getSelectedRow()).getQuantita()));
+		double nuovoTotale = totalePrima - valoreDaSottrarre;
+		subTotale.setText(String.valueOf(Math.floor(nuovoTotale * 100) / 100));
+		listCarrello.remove(carrello.getSelectedRow());
+		visualizzaTabellaCarrello(listCarrello, carrello);
+	}
+	
+	public void visualizzaTabellaCarrello(ArrayList<Prodotto> carrello, JTable tableCarrello) {
+		DefaultTableModel model = (DefaultTableModel)tableCarrello.getModel();
+        model.setRowCount(0);
+        Object[] row = new Object[10];
+        for (int i = 0; i<carrello.size();i++) {
+            row[0] = carrello.get(i).getDescrizione();
+            row[1] = carrello.get(i).getQuantita();
+            row[2] = carrello.get(i).getIva();
+            row[3] = carrello.get(i).getPrezzo();
+            model.addRow(row);
+        }
 	}
 	
 	public ArrayList<Frutta> tableToArrayListFrutta(JTable tablefrutta) {
@@ -1922,6 +1954,92 @@ public class Controllore implements ControlloreInterfaccia  {
 					+ e.getMessage());
 		}
 	}
+	
+	public double calcolaSubTotale(ArrayList<Prodotto> carrello, JLabel subTotale) {
+		double subTotaleTemp=0;
+		for (Prodotto prodotto : carrello) {
+			subTotaleTemp += ((prodotto.getPrezzo()) * (prodotto.getQuantita()));
+		}
+		subTotale.setText(String.valueOf(Math.floor(subTotaleTemp * 100) / 100));
+		return subTotaleTemp;
+	}
+	
+
+	public ArrayList<Prodotto> aggiungiProdottoListaProdotti(Prodotto prodotto) {
+		ArrayList<Prodotto> listaProdotti = new ArrayList<Prodotto>();
+		listaProdotti.add(prodotto);
+		return listaProdotti;
+	}
+	
+
+	public Ordine completaOrdine(Ordine ordine) {
+		return ordine;
+	}
+	
+	
+	public void aggiungiListaProdotti(ArrayList<Prodotto> listaProdotti, String idLista) {
+		ListaProdottiDaoImp listaprodottiDaoImp = new ListaProdottiDaoImp();
+		listaprodottiDaoImp.addListaProdotti(listaProdotti, idLista);
+	}
+	
+
+	public Ordine aggiungiDatiOrdine(JTextField nomeIntestatario, JTextField tesseraFedelta, JTextField codiceCarta) {
+		Ordine ordine = new Ordine();
+		ordine.setCodiceCliente(null);
+		ordine.setCodiceTessera(tesseraFedelta.getText());
+		ordine.setDataRegistrazione(LocalDate.now().toString());
+		return ordine;
+	}
+	
+
+	public Contanti aggiungiPagamentoContanti(JTextField textContanti, JTextField cartaFedelta) {
+		Contanti contanti = new Contanti();
+		contanti.setSoldiRicevuti(Double.parseDouble(textContanti.getText()));
+		return contanti;
+	}
+	
+
+	public Carta aggiungiPagamentoCarta(JTextField codiceBancaRicevente, JTextField numeroCarta, JTextField cartaFedelta) {
+		Carta carta = new Carta();
+		carta.setCodiceCarta(numeroCarta.getText());
+		carta.setCodiceBancaRicevente(codiceBancaRicevente.getText());
+		return carta;
+	}
+	
+	public static void generaOrdineCarta(String idLista, double totaleOrdine, Carta carta) {
+		Ordine ordine = new Ordine();
+		ordine.setTipoPagamento("CARTA");
+		ordine.setIdLista(idLista);
+		ordine.setCodiceCarta(carta.getCodiceCarta());
+		ordine.setDataRegistrazione(LocalDate.now().toString());
+		String idOrdine = "03"; //GeneraidOrdine
+		ordine.setNumeroOrdine(null);//genera numero ordine
+		ordine.setTotaleOrdine(totaleOrdine);
+		OrdineDaoImp ordinedaoimp = new OrdineDaoImp();
+		ordinedaoimp.addOrdineCarta(ordine, idOrdine, idLista, carta);
+	}
+	
+	public void generaOrdineContanti(String idLista, double totaleOrdine, Contanti contanti) {
+		Ordine ordine = new Ordine();
+		ordine.setTipoPagamento("CONTANTI");
+		ordine.setIdLista(idLista);
+		ordine.setCodiceCarta(null);
+		ordine.setDataRegistrazione(LocalDate.now().toString());
+		String idOrdine = "02"; //GeneraidOrdine
+		ordine.setNumeroOrdine(null);//Genera numero ordine
+		ordine.setTotaleOrdine(totaleOrdine);
+		ordine.setSoldiRicevuti(contanti.getSoldiRicevuti());
+		OrdineDaoImp ordinedaoimp = new OrdineDaoImp();
+		ordinedaoimp.addOrdineContanti(ordine, idOrdine, idLista, contanti);
+	}
+	
+	public void visualizzaListaProdotti(JTable tableListaProdotti, String idLista){
+		ArrayList<Prodotto> listaProdotti = new ArrayList<Prodotto>();
+		ListaProdottiDaoImp listaprodottidaoimp = new ListaProdottiDaoImp();
+		listaProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista);
+		listaprodottidaoimp.modificaTabellaListaProdotti(tableListaProdotti, listaProdotti);
+	}
+
 
 }
 

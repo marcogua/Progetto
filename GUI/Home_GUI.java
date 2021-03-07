@@ -19,18 +19,22 @@ import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Classi.Prodotto;
 import Interfaccie.ControlloreInterfaccia;
 
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 
@@ -65,6 +69,7 @@ public class Home_GUI extends JFrame {
 	private JTextField textFieldQuantitaUova;
 	private JTextField textFieldQuantitaConfezionati;
 	private JTable tableConfezionati;
+	private ArrayList<Prodotto> carrelloArrayList = new ArrayList<Prodotto>();
 
 
 	/**
@@ -89,12 +94,30 @@ public class Home_GUI extends JFrame {
 		contentPane.add(layeredPane, BorderLayout.CENTER);
 		layeredPane.setLayout(new CardLayout(0, 0));
 		
+		JPanel prodottiPanel = new JPanel();
+		layeredPane.add(prodottiPanel, "name_97844091228400");
+		prodottiPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelProdottiMain = new JPanel();
+		prodottiPanel.add(panelProdottiMain, BorderLayout.CENTER);
+		panelProdottiMain.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelCarrello = new JPanel();
+		panelProdottiMain.add(panelCarrello, BorderLayout.EAST);
+		panelCarrello.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_7 = new JPanel();
+		panel_7.setBackground(new Color(153, 153, 153));
+		panelCarrello.add(panel_7, BorderLayout.SOUTH);
+		
+		
+		JPanel BotPanrl = new JPanel();
+		
 		JLabel lblNewLabel = new JLabel("Fruttierbivendolo");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		TopPanel.add(lblNewLabel);
-		
-		JPanel BotPanrl = new JPanel();
+
 		FlowLayout flowLayout = (FlowLayout) BotPanrl.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		BotPanrl.setBackground(new Color(153, 153, 153));
@@ -116,17 +139,10 @@ public class Home_GUI extends JFrame {
 		LeftPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(LeftPanel, BorderLayout.WEST);
 		
-		JPanel prodottiPanel = new JPanel();
-		layeredPane.add(prodottiPanel, "name_97844091228400");
-		prodottiPanel.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelProdottiMain = new JPanel();
-		prodottiPanel.add(panelProdottiMain, BorderLayout.CENTER);
-		panelProdottiMain.setLayout(new BorderLayout(0, 0));
-		
-		JPanel panelCarrello = new JPanel();
-		panelProdottiMain.add(panelCarrello, BorderLayout.EAST);
-		panelCarrello.setLayout(new BorderLayout(0, 0));
+		JLabel lblTotaleNumero = new JLabel("Nessun totale");
+		lblTotaleNumero.setForeground(new Color(255, 255, 255));
+		lblTotaleNumero.setBackground(new Color(255, 255, 255));
+		panel_7.add(lblTotaleNumero);
 		
 		JPanel panelButtonsCarrello = new JPanel();
 		panelButtonsCarrello.setBackground(new Color(153, 153, 153));
@@ -139,7 +155,7 @@ public class Home_GUI extends JFrame {
 		btnRimuoviDalCarello.setBackground(new Color(204, 204, 204));
 		btnRimuoviDalCarello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.rimuoviProdottoCarrello(tableCarrello);
+				controll.rimuoviProdottoCarrello(tableCarrello, carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelButtonsCarrello.add(btnRimuoviDalCarello);
@@ -157,7 +173,7 @@ public class Home_GUI extends JFrame {
 		btnSvuotaCarello.setBackground(new Color(204, 204, 204));
 		btnSvuotaCarello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.svuotaCarello(tableCarrello);
+				controll.svuotaCarello(tableCarrello, carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelButtonsCarrello.add(btnSvuotaCarello);
@@ -180,6 +196,9 @@ public class Home_GUI extends JFrame {
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		scrollPaneCarello.setColumnHeaderView(verticalStrut);
+		
+		Component verticalStrut_1 = Box.createVerticalStrut(25);
+		panel_7.add(verticalStrut_1);
 		
 		JLayeredPane layeredPaneGruttpoProdotti = new JLayeredPane();
 		panelProdottiMain.add(layeredPaneGruttpoProdotti, BorderLayout.CENTER);
@@ -654,8 +673,9 @@ public class Home_GUI extends JFrame {
 		btnAggiungiAlCarelloFrutta.setBackground(new Color(204, 204, 204));
 		btnAggiungiAlCarelloFrutta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloFrutta(tableFrutta, Double.parseDouble(textFieldQuantitaFrutta.getText()), tableCarrello);
+				controll.aggiungiAlCarelloFrutta(tableFrutta, Double.parseDouble(textFieldQuantitaFrutta.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFrutta.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelBottomButton.add(btnAggiungiAlCarelloFrutta);
@@ -679,9 +699,11 @@ public class Home_GUI extends JFrame {
 		panelTabellaVerdura.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelInserisciVerduraCarrello = new JPanel();
+		panelInserisciVerduraCarrello.setBackground(new Color(153, 153, 153));
 		panelTabellaVerdura.add(panelInserisciVerduraCarrello, BorderLayout.SOUTH);
 		
 		JLabel lblQuantitaVerdura = new JLabel("Inserisci la quantita desiderata");
+		lblQuantitaVerdura.setForeground(new Color(255, 255, 255));
 		panelInserisciVerduraCarrello.add(lblQuantitaVerdura);
 		
 		textFieldQuantitaVerdura = new JTextField();
@@ -691,8 +713,9 @@ public class Home_GUI extends JFrame {
 		JButton btnAggiungiAlCarrelloVerdura = new JButton("Aggiungi al carrello");
 		btnAggiungiAlCarrelloVerdura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloVerdura(tableVerdura, Double.parseDouble(textFieldQuantitaVerdura.getText()), tableCarrello);
+				controll.aggiungiAlCarelloVerdura(tableVerdura, Double.parseDouble(textFieldQuantitaVerdura.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaVerdura.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelInserisciVerduraCarrello.add(btnAggiungiAlCarrelloVerdura);
@@ -716,9 +739,11 @@ public class Home_GUI extends JFrame {
 		panelTabellaFarinacei.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelAggiungiFarinaceiCarrello = new JPanel();
+		panelAggiungiFarinaceiCarrello.setBackground(new Color(153, 153, 153));
 		panelTabellaFarinacei.add(panelAggiungiFarinaceiCarrello, BorderLayout.SOUTH);
 		
 		JLabel lblInserisciQuantitaFarinacei = new JLabel("Inserisci la quantita desiderata");
+		lblInserisciQuantitaFarinacei.setForeground(new Color(255, 255, 255));
 		panelAggiungiFarinaceiCarrello.add(lblInserisciQuantitaFarinacei);
 		
 		textFieldQuantitaFarinacei = new JTextField();
@@ -728,8 +753,9 @@ public class Home_GUI extends JFrame {
 		JButton btnAggiungiFarinaceiCarrello = new JButton("Aggiungi al carrello");
 		btnAggiungiFarinaceiCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloFarinacei(tableFarinacei, Double.parseDouble(textFieldQuantitaFarinacei.getText()), tableCarrello);
+				controll.aggiungiAlCarelloFarinacei(tableFarinacei, Double.parseDouble(textFieldQuantitaFarinacei.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFarinacei.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelAggiungiFarinaceiCarrello.add(btnAggiungiFarinaceiCarrello);
@@ -753,9 +779,11 @@ public class Home_GUI extends JFrame {
 		panelTabellaLatticini.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelAggiungiLatticiniCarrello = new JPanel();
+		panelAggiungiLatticiniCarrello.setBackground(new Color(153, 153, 153));
 		panelTabellaLatticini.add(panelAggiungiLatticiniCarrello, BorderLayout.SOUTH);
 		
 		JLabel lblQunaitaLatticini = new JLabel("Inserire la quantita desiderata");
+		lblQunaitaLatticini.setForeground(new Color(255, 255, 255));
 		panelAggiungiLatticiniCarrello.add(lblQunaitaLatticini);
 		
 		textFieldQuantitaLatticini = new JTextField();
@@ -765,8 +793,9 @@ public class Home_GUI extends JFrame {
 		JButton btnAggiungiLatticiniCarrello = new JButton("Aggiungi al carrello");
 		btnAggiungiLatticiniCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloLatticini(tableLatticini, Double.parseDouble(textFieldQuantitaLatticini.getText()), tableCarrello);
+				controll.aggiungiAlCarelloLatticini(tableLatticini, Double.parseDouble(textFieldQuantitaLatticini.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaLatticini.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelAggiungiLatticiniCarrello.add(btnAggiungiLatticiniCarrello);
@@ -791,9 +820,11 @@ public class Home_GUI extends JFrame {
 		panelTabellaUova.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelAggiungiUovaCarrello = new JPanel();
+		panelAggiungiUovaCarrello.setBackground(new Color(153, 153, 153));
 		panelTabellaUova.add(panelAggiungiUovaCarrello, BorderLayout.SOUTH);
 		
 		JLabel lblQuanitaUova = new JLabel("Inserire la quanita desiderata");
+		lblQuanitaUova.setForeground(new Color(255, 255, 255));
 		panelAggiungiUovaCarrello.add(lblQuanitaUova);
 		
 		textFieldQuantitaUova = new JTextField();
@@ -803,8 +834,9 @@ public class Home_GUI extends JFrame {
 		JButton btnAggiungiUovaCarrello = new JButton("Aggiungi al carrello");
 		btnAggiungiUovaCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloUova(tableUova, Double.parseDouble(textFieldQuantitaUova.getText()), tableCarrello);
+				controll.aggiungiAlCarelloUova(tableUova, Double.parseDouble(textFieldQuantitaUova.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaUova.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelAggiungiUovaCarrello.add(btnAggiungiUovaCarrello);
@@ -829,9 +861,11 @@ public class Home_GUI extends JFrame {
 		panelTabellaConfezionati.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelConfezionatiAggiungiCarrello = new JPanel();
+		panelConfezionatiAggiungiCarrello.setBackground(new Color(153, 153, 153));
 		panelTabellaConfezionati.add(panelConfezionatiAggiungiCarrello, BorderLayout.SOUTH);
 		
 		JLabel lblQuantitaConfezionati = new JLabel("Inserire la qunatita desiderata");
+		lblQuantitaConfezionati.setForeground(new Color(255, 255, 255));
 		panelConfezionatiAggiungiCarrello.add(lblQuantitaConfezionati);
 		
 		textFieldQuantitaConfezionati = new JTextField();
@@ -841,8 +875,10 @@ public class Home_GUI extends JFrame {
 		JButton btnNewButton = new JButton("Aggiungi al carrello");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.aggiungiAlCarelloConfezionati(tableConfezionati, Double.parseDouble(textFieldQuantitaConfezionati.getText()), tableCarrello);
+				controll.aggiungiAlCarelloConfezionati(tableConfezionati, Double.parseDouble(textFieldQuantitaConfezionati.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaConfezionati.setText("");
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				
 			}
 		});
 		panelConfezionatiAggiungiCarrello.add(btnNewButton);

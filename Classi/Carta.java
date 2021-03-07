@@ -3,6 +3,12 @@ package Classi;
 public class Carta extends Pagamento{
     private String codiceCarta;
     private String codiceBancaRicevente;
+    
+    public Carta() {
+    	super();
+    	this.codiceCarta = codiceCarta;
+    	this.codiceBancaRicevente = codiceBancaRicevente;
+    }
 
     public Carta(double totale, String dataAcquisto, int puntiGenerati, String codiceCarta, String codiceBancaRicevente) {
         super(totale, dataAcquisto, puntiGenerati);

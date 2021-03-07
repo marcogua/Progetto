@@ -12,7 +12,15 @@ public class Prodotto implements ProdottoInterface {
     private String unita;
     private String iva;
     
-    public Prodotto() {}
+    public Prodotto() {
+    	
+    }
+    
+    public Prodotto(String codiceProdotto, String descrizione, double quantita) {
+    	this.codiceProdotto = codiceProdotto;
+    	this.descrizione = descrizione;
+    	this.quantita = quantita;
+    }
 
 	public Prodotto(String codiceProdotto, String descrizione, String produttoreFornitore, String provenienza,
 					double prezzo, double quantita, String unita, String iva) {
