@@ -8,6 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.Cliente;
+import Classi.Pagamento;
 import Interfaccie.ControlloreInterfaccia;
 
 import javax.swing.JLabel;
@@ -40,6 +42,7 @@ public class PagamentoGUI extends JDialog {
 	private JTextField textFieldNomeIntesta;
 	private JPanel panelPagamentoContanti;
 	private JTextField textFieldTesseraFedeltaCarta;
+	private JTextPane textPaneTotaleCatra;
 	private ControlloreInterfaccia controll;
 
 	/**
@@ -131,6 +134,7 @@ public class PagamentoGUI extends JDialog {
 				textFieldNomeIntestatario = new JTextField();
 				textFieldNomeIntestatario.setColumns(10);
 				
+				
 				JLabel labelNumeroCarta = new JLabel("Numero carta");
 				
 				textFieldNumeroCarta = new JTextField();
@@ -176,7 +180,8 @@ public class PagamentoGUI extends JDialog {
 				
 				JLabel labelIva = new JLabel("Di cui IVA");
 				
-				JTextPane textPaneTotaleCatra = new JTextPane();
+				textPaneTotaleCatra = new JTextPane();
+				
 				
 				JTextPane textPaneIvaCarta = new JTextPane();
 				
@@ -390,10 +395,21 @@ public class PagamentoGUI extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton buttonAnulla = new JButton("Anulla");
+				buttonAnulla.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+					}
+				});
 				buttonAnulla.setBackground(new Color(204, 204, 204));
 				buttonAnulla.setActionCommand("Cancel");
 				buttonPane.add(buttonAnulla);
 			}
 		}
 	}
+	
+	public void riceviTortale(Pagamento Pagamento) {
+		
+		controll.leggiVal(Pagamento, textPaneTotaleCatra);
+	
+}
 }

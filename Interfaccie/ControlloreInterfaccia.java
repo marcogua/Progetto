@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import Classi.*;
 
@@ -1325,6 +1326,10 @@ public interface ControlloreInterfaccia {
 	Contanti aggiungiPagamentoContanti(JTextField textContanti, JTextField cartaFedelta);
 
 	double calcolaSubTotale(ArrayList<Prodotto> carrelloArrayList, JLabel lblTotaleNumero);
-
-
+	
+	void leggiVal(Pagamento pagamento,JTextPane nome);
+	
+	Pagamento prelevaTotale(JLabel valore);
+	
+	void Pagamento_GUI(Pagamento pagamento);
 }

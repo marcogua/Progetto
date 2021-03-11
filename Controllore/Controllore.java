@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
 import Classi.*;
@@ -88,6 +89,12 @@ public class Controllore implements ControlloreInterfaccia  {
 			modifica.setVisible(true);
 		
 	}
+	
+	public void Pagamento_GUI(Pagamento pagamento) {
+		paga.riceviTortale(pagamento);
+		paga.setVisible(true);
+	
+}
 
 	public void modificaProdotto_GUI(Prodotto prodotto) {
 		modificaProdotto.riceviProdotto(prodotto);
@@ -180,7 +187,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		
 	}
 	
-	@Override
+
 	public void mostraClientiTessera(JTable tabella, JTextField email) {
 		Connection conn = this.collegamento();
 		try {
@@ -196,7 +203,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		
 	}
 	
-	@Override
+
 	public void mostraClientiCodClienti(JTable tabella, JTextField cliente) {
 		Connection conn = this.collegamento();
 		try {
@@ -212,7 +219,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		
 	}
 	
-	@Override
+
 	public void verificaCerca(JComboBox selezione,JTable tabella, JTextField nome ) {
 		String valore = (String)selezione.getSelectedItem();
 
@@ -2038,6 +2045,18 @@ public class Controllore implements ControlloreInterfaccia  {
 		ListaProdottiDaoImp listaprodottidaoimp = new ListaProdottiDaoImp();
 		listaProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista);
 		listaprodottidaoimp.modificaTabellaListaProdotti(tableListaProdotti, listaProdotti);
+	}
+	
+	public void leggiVal(Pagamento pagamento,JTextPane nome) {
+		nome.setText(Double.toString(pagamento.getTotale()));
+	}
+	
+	public Pagamento prelevaTotale(JLabel valore) {
+		Pagamento pagamento = new Pagamento();
+		
+		pagamento.setTotale(Double.parseDouble(valore.getText()));
+		
+		return pagamento;
 	}
 
 

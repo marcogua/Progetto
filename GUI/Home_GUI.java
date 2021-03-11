@@ -69,6 +69,7 @@ public class Home_GUI extends JFrame {
 	private JTextField textFieldQuantitaUova;
 	private JTextField textFieldQuantitaConfezionati;
 	private JTable tableConfezionati;
+	private JLabel lblTotaleNumero;
 	private ArrayList<Prodotto> carrelloArrayList = new ArrayList<Prodotto>();
 
 
@@ -123,11 +124,14 @@ public class Home_GUI extends JFrame {
 		BotPanrl.setBackground(new Color(153, 153, 153));
 		contentPane.add(BotPanrl, BorderLayout.SOUTH);
 		
+		lblTotaleNumero = new JLabel("0");
+		
 		JButton ButtonPaga = new JButton("Pagamento");
 		ButtonPaga.setHorizontalAlignment(SwingConstants.RIGHT);
 		ButtonPaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.pagameto_GUI();
+				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero));
+				//controll.pagameto_GUI();
 			}
 		});
 		ButtonPaga.setBackground(new Color(204, 204, 204));
@@ -139,7 +143,6 @@ public class Home_GUI extends JFrame {
 		LeftPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(LeftPanel, BorderLayout.WEST);
 		
-		JLabel lblTotaleNumero = new JLabel("Nessun totale");
 		lblTotaleNumero.setForeground(new Color(255, 255, 255));
 		lblTotaleNumero.setBackground(new Color(255, 255, 255));
 		panel_7.add(lblTotaleNumero);
