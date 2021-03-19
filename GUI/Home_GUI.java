@@ -143,6 +143,10 @@ public class Home_GUI extends JFrame {
 		LeftPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(LeftPanel, BorderLayout.WEST);
 		
+		JLabel jLabelTotale = new JLabel("Totale: ");
+		jLabelTotale.setForeground(Color.WHITE);
+		panel_7.add(jLabelTotale);
+		
 		lblTotaleNumero.setForeground(new Color(255, 255, 255));
 		lblTotaleNumero.setBackground(new Color(255, 255, 255));
 		panel_7.add(lblTotaleNumero);
