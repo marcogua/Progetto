@@ -194,9 +194,10 @@ public class Home_GUI extends JFrame {
 		tableCarrello = new JTable();
 		tableCarrello.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null},
 			},
 			new String[] {
-				"Quantita", "Descrizione", "Iva", "Prezzo"
+				"Descrizione", "Quantita", "Iva", "Prezzo"
 			}
 		));
 		scrollPaneCarello.setViewportView(tableCarrello);

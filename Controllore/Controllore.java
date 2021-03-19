@@ -1018,7 +1018,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	public void visualizzaTabellaCarrello(ArrayList<Prodotto> carrello, JTable tableCarrello) {
 		DefaultTableModel model = (DefaultTableModel)tableCarrello.getModel();
         model.setRowCount(0);
-        Object[] row = new Object[10];
+        Object[] row = new Object[4];
         for (int i = 0; i<carrello.size();i++) {
             row[0] = carrello.get(i).getDescrizione();
             row[1] = carrello.get(i).getQuantita();
