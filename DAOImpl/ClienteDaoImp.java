@@ -2,6 +2,7 @@ package DAOImpl;
 
 import Classi.Cliente;
 import DAO.ClienteDao;
+import DbConfig.DbConnect;
 import Interfaccie.ClienteInterface;
 
 import java.sql.Connection;
@@ -36,6 +37,8 @@ public class ClienteDaoImp implements ClienteDao  {
         
         
     } 
+    
+    public ClienteDaoImp() {}
 
     /**
      * Legge dalla base di dati tutte le tuple di cliente
@@ -311,5 +314,29 @@ public class ClienteDaoImp implements ClienteDao  {
 			this.modificaTabella(tabella, this.ordinaClienti( clienti));
 	}
 	
+	public String cercaCodiceCliente(String codiceTessera) {
+		String sql="SELECT codiceclienti FROM clienti WHERE codicetessera=?;";
+		String codiceCliente = null;
+        try {
+            DbConnect dbconn = DbConnect.getIstanza();
+            Connection conn = dbconn.getConnection();
 
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, codiceTessera);
+
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+				codiceCliente = rs.getString(1);
+			}
+
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return codiceCliente;
+	}
 }

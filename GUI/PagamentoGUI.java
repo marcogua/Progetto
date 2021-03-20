@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 
 import Classi.Cliente;
 import Classi.Pagamento;
+import Classi.Prodotto;
+import DAOImpl.ClienteDaoImp;
 import Interfaccie.ControlloreInterfaccia;
 
 import javax.swing.JLabel;
@@ -25,6 +27,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
@@ -43,7 +46,16 @@ public class PagamentoGUI extends JDialog {
 	private JPanel panelPagamentoContanti;
 	private JTextField textFieldTesseraFedeltaCarta;
 	private JTextPane textPaneTotaleCatra;
+	private ArrayList<Prodotto> listaProdotti;
 	private ControlloreInterfaccia controll;
+
+	public ArrayList<Prodotto> getListaProdotti() {
+		return listaProdotti;
+	}
+
+	public void setListaProdotti(ArrayList<Prodotto> listaProdotti) {
+		this.listaProdotti = listaProdotti;
+	}
 
 	/**
 	 * Create the dialog.
@@ -173,6 +185,29 @@ public class PagamentoGUI extends JDialog {
 				
 				JButton buttonPaga = new JButton("Paga");
 				buttonPaga.setBackground(new Color(204, 204, 204));
+				
+				buttonPaga.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						//deve inserire la lista prodotti e il pagamento nel db
+						//controll.aggiungiListaProdotti(listaProdotti);
+						
+						ClienteDaoImp clientedaoimp = new ClienteDaoImp();
+						System.out.println(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.getText()));
+						/*
+						Carta carta = new Carta();
+						carta.setCodiceCarta(textFieldNumeroCarta.getText());
+						//Ricerca del codCliente prendeto carta fedeltà
+						Ordine ordine = new Ordine();
+						ordine.setCodiceCliente(getName());//risulatato della quary precedente
+						ordine.setCodiceCarta(carta.getCodiceCarta());
+						ordine.setDataRegistrazione(LocalDateTime.now().toString());
+						ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleCatra.getText()));
+						ordine.setTipoPagamento("CARTA");
+						ordine.setIdLista(getName());
+						ordine.setNumeroOrdine(getName());
+						*/
+					}
+				});
 				
 				JLabel labelRiepilogoOrdine = new JLabel("Riepilogo ordine");
 				
@@ -318,6 +353,24 @@ public class PagamentoGUI extends JDialog {
 			JButton buttonPaga = new JButton("Paga");
 			buttonPaga.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					//deve inserire la lista prodotti e il pagamento nel db
+					System.out.println(listaProdotti.size());
+					//controll.aggiungiListaProdotti(listaProdotti);
+					/*
+					Contanti contanti = new Contanti();
+					contanti.setDataAcquisto(LocalDateTime.now().toString());
+					contanti.setSoldiRicevuti(Double.parseDouble(textFieldContantiDati.toString()));
+					
+					ClienteDaoImp clientedaoimp = new ClienteDaoImp();
+					Ordine ordine = new Ordine();
+					//ordine.setDataRegistrazione(contanti.getDataAcquisto());
+					ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.toString()));
+					
+					ordine.setIdLista(getName());
+					ordine.setNumeroOrdine(getName());
+					ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleCatra.getText()));
+					ordine.setTipoPagamento("CONTANTI");
+					*/
 				}
 			});
 			buttonPaga.setBackground(new Color(204, 204, 204));

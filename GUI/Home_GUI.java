@@ -163,6 +163,8 @@ public class Home_GUI extends JFrame {
 		btnRimuoviDalCarello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.rimuoviProdottoCarrello(tableCarrello, carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelButtonsCarrello.add(btnRimuoviDalCarello);
@@ -181,6 +183,8 @@ public class Home_GUI extends JFrame {
 		btnSvuotaCarello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.svuotaCarello(tableCarrello, carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		panelButtonsCarrello.add(btnSvuotaCarello);
@@ -684,6 +688,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloFrutta(tableFrutta, Double.parseDouble(textFieldQuantitaFrutta.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFrutta.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 			}
 		});
 		panelBottomButton.add(btnAggiungiAlCarelloFrutta);
@@ -724,6 +729,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloVerdura(tableVerdura, Double.parseDouble(textFieldQuantitaVerdura.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaVerdura.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 			}
 		});
 		panelInserisciVerduraCarrello.add(btnAggiungiAlCarrelloVerdura);
@@ -764,6 +770,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloFarinacei(tableFarinacei, Double.parseDouble(textFieldQuantitaFarinacei.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFarinacei.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 			}
 		});
 		panelAggiungiFarinaceiCarrello.add(btnAggiungiFarinaceiCarrello);
@@ -804,6 +811,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloLatticini(tableLatticini, Double.parseDouble(textFieldQuantitaLatticini.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaLatticini.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 			}
 		});
 		panelAggiungiLatticiniCarrello.add(btnAggiungiLatticiniCarrello);
@@ -845,6 +853,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloUova(tableUova, Double.parseDouble(textFieldQuantitaUova.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaUova.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 			}
 		});
 		panelAggiungiUovaCarrello.add(btnAggiungiUovaCarrello);
@@ -886,6 +895,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloConfezionati(tableConfezionati, Double.parseDouble(textFieldQuantitaConfezionati.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaConfezionati.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList);
 				
 			}
 		});
