@@ -8,7 +8,10 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Classi.Carta;
 import Classi.Cliente;
+import Classi.GenerateId;
+import Classi.Ordine;
 import Classi.Pagamento;
 import Classi.Prodotto;
 import DAOImpl.ClienteDaoImp;
@@ -27,6 +30,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -190,22 +194,20 @@ public class PagamentoGUI extends JDialog {
 					public void actionPerformed(ActionEvent e) {
 						//deve inserire la lista prodotti e il pagamento nel db
 						//controll.aggiungiListaProdotti(listaProdotti);
-						
 						ClienteDaoImp clientedaoimp = new ClienteDaoImp();
-						System.out.println(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.getText()));
-						/*
+						
 						Carta carta = new Carta();
 						carta.setCodiceCarta(textFieldNumeroCarta.getText());
 						//Ricerca del codCliente prendeto carta fedeltà
 						Ordine ordine = new Ordine();
-						ordine.setCodiceCliente(getName());//risulatato della quary precedente
+						ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.getText()));//risulatato della quary precedente
 						ordine.setCodiceCarta(carta.getCodiceCarta());
 						ordine.setDataRegistrazione(LocalDateTime.now().toString());
 						ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleCatra.getText()));
 						ordine.setTipoPagamento("CARTA");
-						ordine.setIdLista(getName());
-						ordine.setNumeroOrdine(getName());
-						*/
+						ordine.setIdLista(GenerateId.generatoreListaProdotti());
+						ordine.setNumeroOrdine(GenerateId.generatoreOrdine());
+						
 					}
 				});
 				
@@ -460,9 +462,9 @@ public class PagamentoGUI extends JDialog {
 		}
 	}
 	
-	public void riceviTortale(Pagamento Pagamento) {
+	public void riceviTortale(Pagamento Pagamento, ArrayList<Prodotto> prodotto) {
 		
 		controll.leggiVal(Pagamento, textPaneTotaleCatra);
-	
+		this.listaProdotti = prodotto;
 }
 }

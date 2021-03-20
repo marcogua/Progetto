@@ -130,7 +130,7 @@ public class Home_GUI extends JFrame {
 		ButtonPaga.setHorizontalAlignment(SwingConstants.RIGHT);
 		ButtonPaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero));
+				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero), carrelloArrayList);
 				//controll.pagameto_GUI();
 			}
 		});
@@ -142,6 +142,10 @@ public class Home_GUI extends JFrame {
 		JPanel LeftPanel = new JPanel();
 		LeftPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(LeftPanel, BorderLayout.WEST);
+		
+		JLabel jLabelTotale = new JLabel("Totale: ");
+		jLabelTotale.setForeground(Color.WHITE);
+		panel_7.add(jLabelTotale);
 		
 		lblTotaleNumero.setForeground(new Color(255, 255, 255));
 		lblTotaleNumero.setBackground(new Color(255, 255, 255));
@@ -194,9 +198,10 @@ public class Home_GUI extends JFrame {
 		tableCarrello = new JTable();
 		tableCarrello.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null},
 			},
 			new String[] {
-				"Quantita", "Descrizione", "Iva", "Prezzo"
+				"Descrizione", "Quantita", "Iva", "Prezzo"
 			}
 		));
 		scrollPaneCarello.setViewportView(tableCarrello);

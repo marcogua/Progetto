@@ -9,7 +9,7 @@ public class DbConnect {
 	private Connection conn = null;
 	private static final String URL ="jdbc:postgresql://localhost:5432/Progetto";
 	private static final String USERNAME="postgres";
-	private static final String PASSWORD = "Pass1234";
+	private static final String PASSWORD = "toor";
 	
 	private DbConnect() {
 		try {

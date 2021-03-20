@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Carrello {
     private ArrayList<Prodotto> listaProdotti;
-    //Vola
+    
     public Carrello(ArrayList<Prodotto> listaProdotti) {
         this.listaProdotti = listaProdotti;
     }
