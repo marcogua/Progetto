@@ -90,8 +90,8 @@ public class Controllore implements ControlloreInterfaccia  {
 		
 	}
 	
-	public void Pagamento_GUI(Pagamento pagamento) {
-		paga.riceviTortale(pagamento);
+	public void Pagamento_GUI(Pagamento pagamento, ArrayList<Prodotto> prodotto) {
+		paga.riceviTortale(pagamento, prodotto);
 		paga.setVisible(true);
 	
 }

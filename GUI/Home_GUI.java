@@ -130,7 +130,7 @@ public class Home_GUI extends JFrame {
 		ButtonPaga.setHorizontalAlignment(SwingConstants.RIGHT);
 		ButtonPaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero));
+				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero), carrelloArrayList);
 				//controll.pagameto_GUI();
 			}
 		});

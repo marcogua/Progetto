@@ -1331,7 +1331,7 @@ public interface ControlloreInterfaccia {
 	
 	Pagamento prelevaTotale(JLabel valore);
 	
-	void Pagamento_GUI(Pagamento pagamento);
+	void Pagamento_GUI(Pagamento pagamento, ArrayList<Prodotto> prodotto);
 
 	void calcolaIvaSubTotale(ArrayList<Prodotto> carrelloArrayList);
 }
