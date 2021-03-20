@@ -2013,7 +2013,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		return carta;
 	}
 	
-	public static void generaOrdineCarta(String idLista, double totaleOrdine, Carta carta) {
+	public void generaOrdineCarta(String idLista, double totaleOrdine, Carta carta) {
 		Ordine ordine = new Ordine();
 		ordine.setTipoPagamento("CARTA");
 		ordine.setIdLista(idLista);
@@ -2059,6 +2059,14 @@ public class Controllore implements ControlloreInterfaccia  {
 		return pagamento;
 	}
 
-
+	public void calcolaIvaSubTotale(ArrayList<Prodotto> carrello) //JLabel lblsubTotaleIva
+	{
+		double subTotaleIva = 0;
+		for (Prodotto prodotto : carrello) {
+			subTotaleIva += (((prodotto.getPrezzo() * Double.parseDouble(prodotto.getIva())) / 100) * prodotto.getQuantita());
+		}
+		System.out.println(Math.floor(subTotaleIva * 100) / 100);
+		//return subTotaleIva;
+	}
 }
 
