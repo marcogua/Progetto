@@ -296,6 +296,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaVerdura.add(lblCercaVerduraPer);
 		
 		JComboBox comboBoxCercaVerduraPer = new JComboBox();
+		comboBoxCercaVerduraPer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaVerduraPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Porduttore/Fornitore", "Provenienza", "Data raccolta"}));
 		panelRicercaVerdura.add(comboBoxCercaVerduraPer);
 		
@@ -304,6 +305,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaVerdura.add(textFieldCercaVerduraPer);
 		
 		JButton btnCercaVerduraPer = new JButton("Cerca");
+		btnCercaVerduraPer.setBackground(new Color(204, 204, 204));
 		btnCercaVerduraPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if ((comboBoxCercaVerduraPer.getSelectedItem().toString().compareTo("Codice prodotto")) == 0){
@@ -329,6 +331,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaVerdura.add(lblOrdinaVerduraPer);
 		
 		JComboBox comboBoxOrdinaVerduraPer = new JComboBox();
+		comboBoxOrdinaVerduraPer.setBackground(new Color(204, 204, 204));
 		comboBoxOrdinaVerduraPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxOrdinaVerduraPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -360,6 +363,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaFarinacei.add(lblCercaFarinceiPer);
 		
 		JComboBox comboBoxCercaFarinaceiPer = new JComboBox();
+		comboBoxCercaFarinaceiPer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaFarinaceiPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data scadenza"}));
 		panelRicercaFarinacei.add(comboBoxCercaFarinaceiPer);
 		
@@ -368,6 +372,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaFarinacei.add(textFieldCercaFarinaceiPer);
 		
 		JButton btnCercaFarinaceiPer = new JButton("Cerca");
+		btnCercaFarinaceiPer.setBackground(new Color(204, 204, 204));
 		btnCercaFarinaceiPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxCercaFarinaceiPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -393,6 +398,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaFarinacei.add(lblOrdinaFarinaceiPer);
 		
 		JComboBox comboBoxOrdinaFarinaceiPer = new JComboBox();
+		comboBoxOrdinaFarinaceiPer.setBackground(new Color(204, 204, 204));
 		comboBoxOrdinaFarinaceiPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxOrdinaFarinaceiPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -425,6 +431,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaLatticini.add(lblCercaLatticiniPer);
 		
 		JComboBox comboBoxCercaLatticiniPer = new JComboBox();
+		comboBoxCercaLatticiniPer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaLatticiniPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data mungitura", "Data produzione"}));
 		panelRicercaLatticini.add(comboBoxCercaLatticiniPer);
 		
@@ -433,6 +440,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaLatticini.add(textFieldCercaLatticiniPer);
 		
 		JButton btnCercaLatticiniPer = new JButton("Cerca");
+		btnCercaLatticiniPer.setBackground(new Color(204, 204, 204));
 		btnCercaLatticiniPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxCercaLatticiniPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -460,6 +468,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaLatticini.add(lblOrdinaLatticiniPer);
 		
 		JComboBox comboBoxOrdinaLatticiniPer = new JComboBox();
+		comboBoxOrdinaLatticiniPer.setBackground(new Color(204, 204, 204));
 		comboBoxOrdinaLatticiniPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -496,6 +505,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaUova.add(lblCercaUovaPer);
 		
 		JComboBox comboBoxCercaUovaPer = new JComboBox();
+		comboBoxCercaUovaPer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaUovaPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data confezionamento", "Categoria uova", "Classe peso"}));
 		panelRicercaUova.add(comboBoxCercaUovaPer);
 		
@@ -504,6 +514,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaUova.add(textFieldCercaUovaPer);
 		
 		JButton btnCercaUovaPer = new JButton("Cerca");
+		btnCercaUovaPer.setBackground(new Color(204, 204, 204));
 		btnCercaUovaPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxCercaUovaPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -533,6 +544,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaUova.add(lblOrdinaUovaPer);
 		
 		JComboBox comboBoxOrdinaUovaPer = new JComboBox();
+		comboBoxOrdinaUovaPer.setBackground(new Color(204, 204, 204));
 		comboBoxOrdinaUovaPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxOrdinaUovaPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -568,6 +580,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaConfezionati.add(lblCercaConfezionatiPer);
 		
 		JComboBox comboBoxCercaConfezionatiPer = new JComboBox();
+		comboBoxCercaConfezionatiPer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaConfezionatiPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data confezion", "Data scadenza"}));
 		panelRicercaConfezionati.add(comboBoxCercaConfezionatiPer);
 		
@@ -576,6 +589,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaConfezionati.add(textFieldCercaConfezionatiPer);
 		
 		JButton btnCercaConfezionatiPer = new JButton("Cerca");
+		btnCercaConfezionatiPer.setBackground(new Color(204, 204, 204));
 		btnCercaConfezionatiPer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxCercaConfezionatiPer.getSelectedItem().toString().compareTo("Codice prodotto") == 0) {
@@ -600,6 +614,7 @@ public class Home_GUI extends JFrame {
 		panelRicercaConfezionati.add(lblOrdinaConfezionatiPer);
 		
 		JComboBox comboBoxOrdinaConfezionatiPer = new JComboBox();
+		comboBoxOrdinaConfezionatiPer.setBackground(new Color(204, 204, 204));
 		comboBoxOrdinaConfezionatiPer.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
