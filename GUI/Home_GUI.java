@@ -48,7 +48,7 @@ public class Home_GUI extends JFrame {
 	private JTable tableTesseraPunti;
 	private JTextField textField;
 	private JTable tableMagazzino;
-	private JTextField textField_2;
+	private JTextField textFieldCercaOrdinePer;
 	private JTable tableRegistro;
 	private JTable tableCarrello;
 	private JTextField textFieldCercaFruttaPer;
@@ -160,13 +160,7 @@ public class Home_GUI extends JFrame {
 		
 		JButton btnRimuoviDalCarello = new JButton("Rimuovi dal carello");
 		btnRimuoviDalCarello.setBackground(new Color(204, 204, 204));
-		btnRimuoviDalCarello.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controll.rimuoviProdottoCarrello(tableCarrello, carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
-				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-			}
-		});
+		
 		panelButtonsCarrello.add(btnRimuoviDalCarello);
 		
 		Component horizontalStrut_8 = Box.createHorizontalStrut(20);
@@ -180,13 +174,7 @@ public class Home_GUI extends JFrame {
 		
 		JButton btnSvuotaCarello = new JButton("Svuota carello");
 		btnSvuotaCarello.setBackground(new Color(204, 204, 204));
-		btnSvuotaCarello.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controll.svuotaCarello(tableCarrello, carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
-				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-			}
-		});
+		
 		panelButtonsCarrello.add(btnSvuotaCarello);
 		
 		Component horizontalStrut_6 = Box.createHorizontalStrut(20);
@@ -211,6 +199,14 @@ public class Home_GUI extends JFrame {
 		
 		Component verticalStrut_1 = Box.createVerticalStrut(25);
 		panel_7.add(verticalStrut_1);
+		
+		JLabel lblDiCuiIva = new JLabel("Di cui IVA: ");
+		lblDiCuiIva.setForeground(Color.WHITE);
+		panel_7.add(lblDiCuiIva);
+		
+		JLabel lblIvaSubTotale = new JLabel("0");
+		lblIvaSubTotale.setForeground(Color.WHITE);
+		panel_7.add(lblIvaSubTotale);
 		
 		JLayeredPane layeredPaneGruttpoProdotti = new JLayeredPane();
 		panelProdottiMain.add(layeredPaneGruttpoProdotti, BorderLayout.CENTER);
@@ -688,7 +684,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloFrutta(tableFrutta, Double.parseDouble(textFieldQuantitaFrutta.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFrutta.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		panelBottomButton.add(btnAggiungiAlCarelloFrutta);
@@ -729,7 +725,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloVerdura(tableVerdura, Double.parseDouble(textFieldQuantitaVerdura.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaVerdura.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		panelInserisciVerduraCarrello.add(btnAggiungiAlCarrelloVerdura);
@@ -770,7 +766,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloFarinacei(tableFarinacei, Double.parseDouble(textFieldQuantitaFarinacei.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaFarinacei.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		panelAggiungiFarinaceiCarrello.add(btnAggiungiFarinaceiCarrello);
@@ -811,7 +807,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloLatticini(tableLatticini, Double.parseDouble(textFieldQuantitaLatticini.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaLatticini.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		panelAggiungiLatticiniCarrello.add(btnAggiungiLatticiniCarrello);
@@ -853,7 +849,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloUova(tableUova, Double.parseDouble(textFieldQuantitaUova.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaUova.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		panelAggiungiUovaCarrello.add(btnAggiungiUovaCarrello);
@@ -895,7 +891,7 @@ public class Home_GUI extends JFrame {
 				controll.aggiungiAlCarelloConfezionati(tableConfezionati, Double.parseDouble(textFieldQuantitaConfezionati.getText()), tableCarrello, carrelloArrayList);
 				textFieldQuantitaConfezionati.setText("");
 				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
-				controll.calcolaIvaSubTotale(carrelloArrayList);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
 				
 			}
 		});
@@ -996,6 +992,22 @@ public class Home_GUI extends JFrame {
 				layeredPaneTabelle.repaint();
 				layeredPaneTabelle.revalidate();
 				controll.visualizzaTabellaConfezionati(tableConfezionati);
+			}
+		});
+		
+		btnSvuotaCarello.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controll.svuotaCarello(tableCarrello, carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList, lblIvaSubTotale);
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
+			}
+		});
+		
+		btnRimuoviDalCarello.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controll.rimuoviProdottoCarrello(tableCarrello, carrelloArrayList, lblTotaleNumero);
+				controll.calcolaIvaSubTotale(carrelloArrayList,lblIvaSubTotale);
+				controll.calcolaSubTotale(carrelloArrayList, lblTotaleNumero);
 			}
 		});
 		
@@ -1261,27 +1273,90 @@ public class Home_GUI extends JFrame {
 		panel_5.setBackground(new Color(153, 153, 153));
 		registroPanel.add(panel_5, BorderLayout.NORTH);
 		
-		JLabel labelOrdinaRegistro = new JLabel("Ordina per");
-		panel_5.add(labelOrdinaRegistro);
+		JLabel lblCercaOrdinePer = new JLabel("Cerca ordine per");
+		panel_5.add(lblCercaOrdinePer);
 		
-		JComboBox comboBox_4 = new JComboBox();
-		comboBox_4.setBackground(new Color(204, 204, 204));
-		comboBox_4.setModel(new DefaultComboBoxModel(new String[] {"Numero ordine", "Totale ordine ", "Data registrazione ",  
-				"Soldi ricevuti ",  "Codice carta ",  "Tipo pagamento ", "Codice cliente "}));
-		panel_5.add(comboBox_4);
+		JComboBox comboBoxCercaOrdinePer = new JComboBox();
+		comboBoxCercaOrdinePer.setModel(new DefaultComboBoxModel(new String[] {"Numero ordine", "Data registrazione", "Id lista prodotti", "Codice carta", "Tipo pagamento", "Codice cliente"}));
+		panel_5.add(comboBoxCercaOrdinePer);
 		
-		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
-		panel_5.add(horizontalStrut_3);
-		
-		textField_2 = new JTextField();
-		panel_5.add(textField_2);
-		textField_2.setColumns(13);
+		textFieldCercaOrdinePer = new JTextField();
+		panel_5.add(textFieldCercaOrdinePer);
+		textFieldCercaOrdinePer.setColumns(13);
 		
 		JButton buttonCercaRegistro = new JButton("Cerca");
+		buttonCercaRegistro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Numero ordine") == 0) {
+					controll.visualizzaTabellaRegistroVenditeCercaPerNumeroOrdine(tableRegistro, textFieldCercaOrdinePer.getText());
+				}else if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Data registrazione") == 0) {
+					controll.visualizzaTabellaRegistroVenditeCercaPerDataRegistrazione(tableRegistro, textFieldCercaOrdinePer.getText());
+				}else if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Id lista prodotti") == 0) {
+					controll.visualizzaTabellaRegistroVenditeCercaPerIdListaProdotti(tableRegistro, textFieldCercaOrdinePer.getText());
+				}else if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Codice carta") == 0) {
+					controll.visualizzaTabellaRegistroVenditeCercaPerCodiceCarta(tableRegistro, textFieldCercaOrdinePer.getText());
+				}else if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Tipo pagamento") == 0) {
+					//controll.visualizzaTabellaRegistro
+				}else if(comboBoxCercaOrdinePer.getSelectedItem().toString().compareTo("Codice cliente") == 0) {
+					controll.visualizzaTabellaRegistroVenditeCercaPerCodiceCliente(tableRegistro, textFieldCercaOrdinePer.getText());
+				}
+			}
+		});
 		buttonCercaRegistro.setBackground(new Color(204, 204, 204));
 		buttonCercaRegistro.setFocusPainted(false);
 		buttonCercaRegistro.setFocusPainted(false);
 		panel_5.add(buttonCercaRegistro);
+		
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		panel_5.add(horizontalStrut_3);
+		
+		JLabel labelOrdinaRegistro = new JLabel("Ordina per");
+		panel_5.add(labelOrdinaRegistro);
+		
+		JComboBox comboBoxOrdinaOrdinePer = new JComboBox();
+		comboBoxOrdinaOrdinePer.setBackground(new Color(204, 204, 204));
+		comboBoxOrdinaOrdinePer.setModel(new DefaultComboBoxModel(new String[] {"Numero ordine", "Totale ordine", "Data registrazione",  
+				"Soldi ricevuti",  "Codice carta",  "Tipo pagamento", "Codice cliente"}));
+		panel_5.add(comboBoxOrdinaOrdinePer);
+		
+		JButton btnOrdinaOrdinePer = new JButton("Ordina");
+		btnOrdinaOrdinePer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Numero ordine") == 0) {
+					controll.visualizzaTabellaOrdinaNumeroOrdine(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Totale ordine") == 0) {
+					controll.visualizzaTabellaOrdinaTotaleOrdine(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Data registrazione") == 0) {
+					controll.visualizzaTabellaOrdinaDataRegistrzione(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Soldi ricevuti") == 0) {
+					controll.visualizzaTabellaOrdinaSoldiRicevuti(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Codice carta") == 0) {
+					controll.visualizzaTabellaOrdinaCodiceCarta(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Tipo pagamento") == 0) {
+					controll.visualizzaTabellaOrdinaTipoPagamento(tableRegistro);
+				}else if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Codice cliente") == 0) {
+					controll.visualizzaTabellaOrdinaCodiceCliente(tableRegistro);
+				}
+			}
+		});
+		panel_5.add(btnOrdinaOrdinePer);
+		
+		Component horizontalStrut_12 = Box.createHorizontalStrut(20);
+		panel_5.add(horizontalStrut_12);
+		
+		Component horizontalStrut_13 = Box.createHorizontalStrut(20);
+		panel_5.add(horizontalStrut_13);
+		
+		Component horizontalStrut_14 = Box.createHorizontalStrut(20);
+		panel_5.add(horizontalStrut_14);
+		
+		JButton btnListaProdottiPerId = new JButton("Prodotti");
+		btnListaProdottiPerId.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//
+			}
+		});
+		panel_5.add(btnListaProdottiPerId);
 		
 		JPanel panel_6 = new JPanel();
 		panel_6.setBackground(new Color(153, 153, 153));
@@ -1485,6 +1560,7 @@ public class Home_GUI extends JFrame {
                 layeredPane.add(registroPanel);
                 layeredPane.repaint();
                 layeredPane.revalidate();
+                controll.visualizzaTabellaRegistroVendite(tableRegistro);
 			}
 		});
 		buttonRegistro.setBackground(new Color(204, 204, 204));

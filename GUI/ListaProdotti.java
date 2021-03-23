@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.table.DefaultTableModel;
 
-import Controllore.Controllore;
+import Interfaccie.ControlloreInterfaccia;
 
 import java.awt.Component;
 import javax.swing.Box;
@@ -22,7 +22,8 @@ public class ListaProdotti extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTable tableListaProdotti;
-	private Controllore controll;
+	private ControlloreInterfaccia controll;
+	
 
 	/**
 	 * Launch the application.
@@ -48,6 +49,7 @@ public class ListaProdotti extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
+		controll.visualizzaListaProdotti(tableListaProdotti, "");//Bisogna inserire l'idLista passato dalla homegui
 		{
 			JPanel panel = new JPanel();
 			contentPanel.add(panel, BorderLayout.NORTH);
@@ -79,126 +81,14 @@ public class ListaProdotti extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
 			}
 		}
 		//controll.visualizzaListaProdotti(tableListaProdotti, idLista);

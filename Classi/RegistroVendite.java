@@ -11,8 +11,6 @@ public class RegistroVendite {
     private String codiceCarta;
     private String bancaRicevente;
 
-    private enum tipoPagamento {CONTANTI, CARTA};
-
     public RegistroVendite(String numeroOrdine, ArrayList<Prodotto> listaProdotti, double totaleOrdine, String dataRegistrazione, double soldiRicevuti, String codiceCarta, String bancaRicevente) {
         this.numeroOrdine = numeroOrdine;
         this.listaProdotti = listaProdotti;

@@ -9,20 +9,17 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Classi.Ordine;
 import Classi.Prodotto;
 import DbConfig.DbConnect;
 
 public class ListaProdottiDaoImp {
 	ArrayList<Prodotto> listaProdotti;
-	String idLista;
 	
 	public ListaProdottiDaoImp() {}
 	
-	public ListaProdottiDaoImp(ArrayList<Prodotto> listaProdotti, String idLista) {
+	public ListaProdottiDaoImp(ArrayList<Prodotto> listaProdotti) {
 		super();
 		this.listaProdotti = listaProdotti;
-		this.idLista = idLista;
 	}
 	
 	public ArrayList<Prodotto> getListaProdottiByIdLista(String idLista) {

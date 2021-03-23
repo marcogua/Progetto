@@ -1,6 +1,5 @@
 package Classi;
 
-import DAOImpl.ClienteDaoImp;
 import Interfaccie.ClienteInterface;
 
 public class Cliente implements ClienteInterface {
