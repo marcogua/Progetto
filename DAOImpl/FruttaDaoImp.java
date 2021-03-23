@@ -1,7 +1,6 @@
 package DAOImpl;
 
 import Classi.Frutta;
-import Classi.Uova;
 import DAO.FruttaDAO;
 import DbConfig.DbConnect;
 

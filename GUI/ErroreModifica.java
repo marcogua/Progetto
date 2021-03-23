@@ -1,7 +1,5 @@
 package GUI;
 
-import Controllore.Controllore;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -9,6 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Interfaccie.ControlloreInterfaccia;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -18,7 +19,7 @@ import java.awt.event.ActionEvent;
 public class ErroreModifica extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
-	private Controllore controll;
+	private ControlloreInterfaccia controll;
 
 	/**
 	 * Launch the application.
@@ -37,7 +38,7 @@ public class ErroreModifica extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ErroreModifica(Controllore ctrl) {
+	public ErroreModifica(ControlloreInterfaccia ctrl) {
 		controll = ctrl;
 		setModalityType(ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 300);

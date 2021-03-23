@@ -8,13 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Classi.Carta;
-import Classi.Cliente;
-import Classi.GenerateId;
-import Classi.Ordine;
 import Classi.Pagamento;
 import Classi.Prodotto;
-import DAOImpl.ClienteDaoImp;
 import Interfaccie.ControlloreInterfaccia;
 
 import javax.swing.JLabel;
@@ -30,7 +25,6 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -192,22 +186,8 @@ public class PagamentoGUI extends JDialog {
 				
 				buttonPaga.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//deve inserire la lista prodotti e il pagamento nel db
-						//controll.aggiungiListaProdotti(listaProdotti);
-						ClienteDaoImp clientedaoimp = new ClienteDaoImp();
-						
-						Carta carta = new Carta();
-						carta.setCodiceCarta(textFieldNumeroCarta.getText());
-						//Ricerca del codCliente prendeto carta fedeltà
-						Ordine ordine = new Ordine();
-						ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.getText()));//risulatato della quary precedente
-						ordine.setCodiceCarta(carta.getCodiceCarta());
-						ordine.setDataRegistrazione(LocalDateTime.now().toString());
-						ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleCatra.getText()));
-						ordine.setTipoPagamento("CARTA");
-						ordine.setIdLista(GenerateId.generatoreListaProdotti());
-						ordine.setNumeroOrdine(GenerateId.generatoreOrdine());
-						
+						controll.generaOrdineCarta(textPaneTotaleCatra, textFieldNumeroCarta, textFieldTesseraFedeltaCarta, listaProdotti);
+						setVisible(false);
 					}
 				});
 				
@@ -350,29 +330,15 @@ public class PagamentoGUI extends JDialog {
 			
 			JTextPane textPaneIvaCarta = new JTextPane();
 			
-			JTextPane textPaneTotaleCatra = new JTextPane();
+			JTextPane textPaneTotaleContanti = new JTextPane();
 			
 			JButton buttonPaga = new JButton("Paga");
 			buttonPaga.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					//deve inserire la lista prodotti e il pagamento nel db
-					System.out.println(listaProdotti.size());
-					//controll.aggiungiListaProdotti(listaProdotti);
-					/*
-					Contanti contanti = new Contanti();
-					contanti.setDataAcquisto(LocalDateTime.now().toString());
-					contanti.setSoldiRicevuti(Double.parseDouble(textFieldContantiDati.toString()));
-					
-					ClienteDaoImp clientedaoimp = new ClienteDaoImp();
-					Ordine ordine = new Ordine();
-					//ordine.setDataRegistrazione(contanti.getDataAcquisto());
-					ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(textFieldTesseraFedeltaCarta.toString()));
-					
-					ordine.setIdLista(getName());
-					ordine.setNumeroOrdine(getName());
-					ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleCatra.getText()));
-					ordine.setTipoPagamento("CONTANTI");
-					*/
+					controll.generaOrdineContanti(listaProdotti, textFieldContantiDati, textPaneTotaleContanti, textFieldTesseraFedelta);
+					controll.generaPunti(textFieldTesseraFedelta, textPaneTotaleContanti, listaProdotti);
+					controll.sottraiQuantitaProdottiVenduti(listaProdotti);
+					setVisible(false);
 				}
 			});
 			buttonPaga.setBackground(new Color(204, 204, 204));
@@ -404,7 +370,7 @@ public class PagamentoGUI extends JDialog {
 										.addGap(50)
 										.addGroup(gl_panelPagamentoContanti.createParallelGroup(Alignment.LEADING)
 											.addComponent(textPaneIvaCarta, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-											.addComponent(textPaneTotaleCatra, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+											.addComponent(textPaneTotaleContanti, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 											.addComponent(buttonPaga, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)))
 									.addGroup(gl_panelPagamentoContanti.createSequentialGroup()
 										.addGap(158)
@@ -432,7 +398,7 @@ public class PagamentoGUI extends JDialog {
 									.addComponent(textFieldTesseraFedelta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addComponent(labelIva)))
 							.addGroup(gl_panelPagamentoContanti.createSequentialGroup()
-								.addComponent(textPaneTotaleCatra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textPaneTotaleContanti, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGap(18)
 								.addComponent(textPaneIvaCarta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGap(227)

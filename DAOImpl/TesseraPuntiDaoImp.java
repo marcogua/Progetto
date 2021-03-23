@@ -2,6 +2,7 @@ package DAOImpl;
 
 import Classi.TesseraPunti;
 import DAO.TesseraPuntiDAO;
+import DbConfig.DbConnect;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,8 @@ public class TesseraPuntiDaoImp implements TesseraPuntiDAO  {
 	 private PreparedStatement getAllTessere, insertTessere, delateTessere;
 	 private PreparedStatement getAllTesseraPerNome, getAllTesseraPerCliente, getAllTesseraPerTessera ;
 	 private PreparedStatement ordinaTessera;
+	 
+	 public TesseraPuntiDaoImp() {}
 
     public TesseraPuntiDaoImp(Connection connection) throws SQLException{
     	this.connection = connection;
@@ -122,12 +125,12 @@ public class TesseraPuntiDaoImp implements TesseraPuntiDAO  {
     	insertTessere.setString(1, tesseraP.getCodiceTessera());
 		insertTessere.setInt(2, tesseraP.getSaldoPunti());
 		insertTessere.setString(3, tesseraP.getNomeIntestatario());
-		insertTessere.setInt(4, tesseraP.getPuntiFrutta());
-		insertTessere.setInt(5, tesseraP.getPuntiVerdura());
-		insertTessere.setInt(6, tesseraP.getPuntiUova());
-		insertTessere.setInt(7, tesseraP.getPuntiConfezionati());
-		insertTessere.setInt(8, tesseraP.getPuntiFarinacei());
-		insertTessere.setInt(9, tesseraP.getPuntiLatticini());
+		insertTessere.setDouble(4, tesseraP.getPuntiFrutta());
+		insertTessere.setDouble(5, tesseraP.getPuntiVerdura());
+		insertTessere.setDouble(6, tesseraP.getPuntiUova());
+		insertTessere.setDouble(7, tesseraP.getPuntiConfezionati());
+		insertTessere.setDouble(8, tesseraP.getPuntiFarinacei());
+		insertTessere.setDouble(9, tesseraP.getPuntiLatticini());
 		insertTessere.setString(10, tesseraP.getCodiceCliente());
 		int row = insertTessere.executeUpdate();
 		return row;
@@ -261,4 +264,67 @@ public class TesseraPuntiDaoImp implements TesseraPuntiDAO  {
 		
 			this.mostraTabella(tabella, this.ordinaTessera( punti));
 	}
+    
+    public TesseraPunti cercaTesseraPuntiPerCodiceTessera(String codiceTessera) {
+    	TesseraPunti tesseraPunti = new TesseraPunti();
+    	String sql = "SELECT * FROM tesserapunti WHERE codicetessera=?;";
+    	 try {
+             DbConnect dbconn = DbConnect.getIstanza();
+             Connection conn = dbconn.getConnection();
+
+             PreparedStatement ps = conn.prepareStatement(sql);
+
+             ps.setString(1, codiceTessera);
+
+             ResultSet rs = ps.executeQuery();
+             
+             while (rs.next()) {
+				tesseraPunti.setCodiceTessera(rs.getString(1));
+				tesseraPunti.setSaldoPunti(rs.getInt(2));
+				tesseraPunti.setNomeIntestatario(rs.getString(3));
+				tesseraPunti.setPuntiFrutta(rs.getDouble(4));
+				tesseraPunti.setPuntiVerdura(rs.getDouble(5));
+				tesseraPunti.setPuntiUova(rs.getDouble(6));
+				tesseraPunti.setPuntiConfezionati(rs.getDouble(7));
+				tesseraPunti.setPuntiFarinacei(rs.getDouble(8));
+				tesseraPunti.setPuntiLatticini(rs.getDouble(9));
+				tesseraPunti.setCodiceCliente(rs.getString(10));
+			}
+
+             conn.close();
+         } catch (SQLException e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+         }
+    	return tesseraPunti;
+    }
+    
+    public void updateTesseraPunti(TesseraPunti tesseraPunti) {
+    	String sql = "UPDATE tesserapunti SET codicetessera=?, saldopunti=?, nomeintestatario=?, puntifrutta=?, puntiverdura=?, puntiuova=?, punticonfezionati=?, puntifarinacei=?, puntilatticini=?, codicecliente=? WHERE codicetessera=?;";
+    	try {
+            DbConnect dbconn = DbConnect.getIstanza();
+            Connection conn = dbconn.getConnection();
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, tesseraPunti.getCodiceTessera());
+            ps.setInt(2, tesseraPunti.getSaldoPunti());
+            ps.setString(3, tesseraPunti.getNomeIntestatario());
+            ps.setDouble(4, tesseraPunti.getPuntiFrutta());
+            ps.setDouble(5, tesseraPunti.getPuntiVerdura());
+            ps.setDouble(6, tesseraPunti.getPuntiUova());
+            ps.setDouble(7, tesseraPunti.getPuntiConfezionati());
+            ps.setDouble(8, tesseraPunti.getPuntiFarinacei());
+            ps.setDouble(9, tesseraPunti.getPuntiLatticini());
+            ps.setString(10, tesseraPunti.getCodiceCliente());
+            ps.setString(11, tesseraPunti.getCodiceTessera());
+
+            ps.executeUpdate();
+
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

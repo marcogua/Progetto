@@ -3,15 +3,11 @@ package DAOImpl;
 import Classi.Cliente;
 import DAO.ClienteDao;
 import DbConfig.DbConnect;
-import Interfaccie.ClienteInterface;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
