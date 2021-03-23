@@ -10,17 +10,20 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Classi.Carta;
-import Classi.Contanti;
-import Classi.Frutta;
 import Classi.Ordine;
 import Classi.Prodotto;
+import DAO.OrdineDao;
 import DbConfig.DbConnect;
 
-public class OrdineDaoImp {
+public class OrdineDaoImp implements OrdineDao  {
 	ArrayList<Ordine> ordine;
 	
 	public OrdineDaoImp() {}
+	
+	public OrdineDaoImp(ArrayList<Ordine> ordine) {
+		this.ordine = ordine;
+	}
+
 	
 	public ArrayList<Ordine> getAllOrdini(){
 		String sql = "SELECT * FROM registrovendite;";
@@ -32,7 +35,8 @@ public class OrdineDaoImp {
             ResultSet rs = st.executeQuery(sql);
             
             while (rs.next()) {
-				ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
 			}
             
             conn.close();
@@ -43,12 +47,14 @@ public class OrdineDaoImp {
 		return ordine;
 	}
 	
+	@Override
 	public void updateOrdine() {
 		
 	}
 	
+	@Override
 	public void deleteOrdine(String codiceOrdine) {
-		String sql = "DELETE FROM registrovendite WHERE numeroordine=?;";
+		String sql = "DELETE FROM registrovendite WHERE idordine=?;";
 		try {
             DbConnect dbconn = DbConnect.getIstanza();
             Connection conn = dbconn.getConnection();
@@ -66,8 +72,9 @@ public class OrdineDaoImp {
         }
 	}
 	
-	public void addOrdineCarta(Ordine ordine, String idOrdine, String idLista, Carta carta) {
-		String sql = "INSERT INTO registrovendite(totaleordine, dataregistrazione, soldiricevuti, codicecarta, codicebancaricevente, tipopagamento, codiceclienti, idlista, idorinde) VALUES (?, to_date(?,'DD MM YYYY'), ?, ?, ?, ?, ?, ?, ?);";
+	@Override
+	public void addOrdine(Ordine ordine) {
+		String sql = "INSERT INTO registrovendite(totaleordine, dataregistrazione, soldiricevuti, codicecarta, codicebancaricevente, tipopagamento, codiceclienti, idlista, idordine) VALUES (?, to_date(?,'DD MM YYYY'), ?, ?, ?, ?, ?, ?, ?);";
 		try {
             DbConnect dbconn = DbConnect.getIstanza();
             Connection conn = dbconn.getConnection();
@@ -75,13 +82,13 @@ public class OrdineDaoImp {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setDouble(1, ordine.getTotaleOrdine());
             ps.setString(2, ordine.getDataRegistrazione());
-            ps.setInt(3, 0);
-            ps.setString(4, carta.getCodiceCarta());
-            ps.setString(5, carta.getCodiceBancaRicevente());
-            ps.setString(6, "CARTA");
+            ps.setDouble(3, ordine.getSoldiRicevuti());
+            ps.setString(4, ordine.getCodiceCarta());
+            ps.setString(5, ordine.getBancaRicevente());
+            ps.setString(6, ordine.getTipoPagamento());
             ps.setString(7, ordine.getCodiceCliente());
-            ps.setString(8, idLista);
-            ps.setString(9, idOrdine);
+            ps.setString(8, ordine.getIdLista());
+            ps.setString(9, ordine.getNumeroOrdine());
             ps.executeUpdate();
 
             conn.close();
@@ -91,31 +98,8 @@ public class OrdineDaoImp {
         }
 	}
 	
-	public void addOrdineContanti(Ordine ordine, String idOrdine, String idLista, Contanti contanti) {
-		String sql = "INSERT INTO registrovendite(totaleordine, dataregistrazione, soldiricevuti, codicecarta, codicebancaricevente, tipopagamento, codiceclienti, idlista, idorinde) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-		try {
-            DbConnect dbconn = DbConnect.getIstanza();
-            Connection conn = dbconn.getConnection();
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setDouble(1, ordine.getTotaleOrdine());
-            ps.setString(2, ordine.getDataRegistrazione());
-            ps.setDouble(3, contanti.getSoldiRicevuti());
-            ps.setString(4, null);
-            ps.setString(5, null);
-            ps.setString(6, "CONTANTI");
-            ps.setString(7, ordine.getCodiceCliente());
-            ps.setString(8, idLista);
-            ps.setString(9, idOrdine);
-            ps.executeUpdate();
-
-            conn.close();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-	}
 	
+	@Override
 	public void addListaProdotti(ArrayList <Prodotto> listaProdotti, String idLista) {
 		String sql = "INSERT INTO listaprodotti(idlista, quantita, codiceprodotto) VALUES (?, ?, ?);";
 		try {
@@ -135,6 +119,7 @@ public class OrdineDaoImp {
         }
 	}
 	/* ------------------------------------------------------------ */
+	@Override
 	public ArrayList<Ordine> cercaPerIdOrdine(String idOrdine) {
 		String sql = "SELECT * FROM registrovendite WHERE idordine=?;";
         try {
@@ -149,7 +134,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -159,6 +145,7 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public ArrayList<Ordine> cercaPerIdLista(String idLista) {
 		String sql = "SELECT * FROM registrovendite WHERE idlista=?;";
         try {
@@ -173,7 +160,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -183,6 +171,7 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public ArrayList<Ordine> cercaPerCodiceCarta(String codiceCarta) {
 		String sql = "SELECT * FROM registrovendite WHERE codicecarta=?;";
         try {
@@ -197,7 +186,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -207,6 +197,7 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public ArrayList<Ordine> cercaPerTotaleOrdine(String totaleOrdine){
 		String sql = "SELECT * FROM registrovendite WHERE totaleordine=?;";
         try {
@@ -221,7 +212,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -231,6 +223,7 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public ArrayList<Ordine> cercaPerDataRegistrazione(String dataRegistrazione){
 		String sql = "SELECT * FROM registrovendite WHERE dataregistrazione=to_date(?,'DD MM YYYY');";
         try {
@@ -245,7 +238,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -255,8 +249,9 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public ArrayList<Ordine> cercaPerCodiceCliente(String codiceCliente){
-		String sql = "SELECT * FROM registrovendite WHERE codiceCliente=?;";
+		String sql = "SELECT * FROM registrovendite WHERE codiceclienti=?";
         try {
             DbConnect dbconn = DbConnect.getIstanza();
             Connection conn = dbconn.getConnection();
@@ -269,7 +264,8 @@ public class OrdineDaoImp {
 
             while (rs.next())
             {
-            	ordine.add(new Ordine());
+            	ordine.add(new Ordine(rs.getString(1), rs.getDouble(2), rs.getString(3), rs.getString(8),
+						rs.getString(9), rs.getString(7), rs.getString(5), rs.getDouble(4), rs.getString(6)));
             }
             conn.close();
         } catch (SQLException e) {
@@ -279,15 +275,21 @@ public class OrdineDaoImp {
         return ordine;
 	}
 	
+	@Override
 	public void modificaTabellaOrdine(JTable tabellaOrdine, ArrayList<Ordine> ordineArrayList) {
         DefaultTableModel model = (DefaultTableModel)tabellaOrdine.getModel();
         model.setRowCount(0);
         Object[] row = new Object[10];
         for (int i = 0; i<ordineArrayList.size();i++) {
             row[0] = ordineArrayList.get(i).getNumeroOrdine();
-            row[1] = ordineArrayList.get(i).getIdLista();
-            row[2] = ordineArrayList.get(i).getCodiceCliente();
-           // row[3] = ordineArrayList.get(i).getd
+            row[1] = ordineArrayList.get(i).getDataRegistrazione();
+            row[2] = ordineArrayList.get(i).getTotaleOrdine();
+            row[3] = ordineArrayList.get(i).getIdLista();
+            row[4] = ordineArrayList.get(i).getSoldiRicevuti();
+            row[5] = ordineArrayList.get(i).getCodiceCarta();
+            row[6] = ordineArrayList.get(i).getBancaRicevente();
+            row[7] = ordineArrayList.get(i).getTipoPagamento();
+            row[8] = ordineArrayList.get(i).getCodiceCliente();
             model.addRow(row);
         }
     }

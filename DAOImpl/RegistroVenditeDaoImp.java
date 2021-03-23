@@ -55,8 +55,7 @@ public class RegistroVenditeDaoImp implements RegistoVenditeDAO {
 
             conn.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        	System.out.println("Errore aggiungere Registro Vendita" + e.getMessage());
         }
 		}
         

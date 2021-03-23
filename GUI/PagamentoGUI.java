@@ -8,8 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Classi.Cliente;
 import Classi.Pagamento;
+import Classi.Prodotto;
 import Interfaccie.ControlloreInterfaccia;
 
 import javax.swing.JLabel;
@@ -25,6 +25,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Color;
 import javax.swing.JTextPane;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
@@ -43,7 +44,19 @@ public class PagamentoGUI extends JDialog {
 	private JPanel panelPagamentoContanti;
 	private JTextField textFieldTesseraFedeltaCarta;
 	private JTextPane textPaneTotaleCatra;
+	private JTextPane textPaneIvaCarta;
+	private JTextPane textPaneTotaleContanti;
+	private JTextPane textPaneIvaContanti;
+	private ArrayList<Prodotto> listaProdotti;
 	private ControlloreInterfaccia controll;
+
+	public ArrayList<Prodotto> getListaProdotti() {
+		return listaProdotti;
+	}
+
+	public void setListaProdotti(ArrayList<Prodotto> listaProdotti) {
+		this.listaProdotti = listaProdotti;
+	}
 
 	/**
 	 * Create the dialog.
@@ -174,6 +187,18 @@ public class PagamentoGUI extends JDialog {
 				JButton buttonPaga = new JButton("Paga");
 				buttonPaga.setBackground(new Color(204, 204, 204));
 				
+				buttonPaga.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controll.generaOrdineCarta(textPaneTotaleCatra, textFieldNumeroCarta, textFieldTesseraFedeltaCarta, listaProdotti);
+						setVisible(false);
+						textFieldNomeIntestatario.setText("");
+						textFieldNumeroCarta.setText("");
+						textFieldCvv.setText("");
+						textFieldPin.setText("");
+						textFieldTesseraFedeltaCarta.setText("");
+					}
+				});
+				
 				JLabel labelRiepilogoOrdine = new JLabel("Riepilogo ordine");
 				
 				JLabel labelTotale = new JLabel("Totale");
@@ -183,7 +208,7 @@ public class PagamentoGUI extends JDialog {
 				textPaneTotaleCatra = new JTextPane();
 				
 				
-				JTextPane textPaneIvaCarta = new JTextPane();
+				textPaneIvaCarta = new JTextPane();
 				
 				JLabel labelTesseraFedelta = new JLabel("Tessera fedelt\u00E0");
 				
@@ -311,13 +336,21 @@ public class PagamentoGUI extends JDialog {
 			
 			JLabel labelIva = new JLabel("Di cui IVA");
 			
-			JTextPane textPaneIvaCarta = new JTextPane();
+			textPaneIvaContanti = new JTextPane();
 			
-			JTextPane textPaneTotaleCatra = new JTextPane();
+			textPaneTotaleContanti = new JTextPane();
 			
 			JButton buttonPaga = new JButton("Paga");
 			buttonPaga.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					controll.generaOrdineContanti(listaProdotti, textFieldContantiDati, textPaneTotaleContanti, textFieldTesseraFedelta);
+					controll.generaPunti(textFieldTesseraFedelta, textPaneTotaleContanti, listaProdotti);
+					controll.sottraiQuantitaProdottiVenduti(listaProdotti);
+					setVisible(false);
+					
+					textFieldNomeIntesta.setText("");
+					textFieldContantiDati.setText("");
+					textFieldTesseraFedelta.setText("");
 				}
 			});
 			buttonPaga.setBackground(new Color(204, 204, 204));
@@ -348,8 +381,8 @@ public class PagamentoGUI extends JDialog {
 											.addComponent(labelIva))
 										.addGap(50)
 										.addGroup(gl_panelPagamentoContanti.createParallelGroup(Alignment.LEADING)
-											.addComponent(textPaneIvaCarta, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-											.addComponent(textPaneTotaleCatra, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+											.addComponent(textPaneIvaContanti, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+											.addComponent(textPaneTotaleContanti, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 											.addComponent(buttonPaga, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)))
 									.addGroup(gl_panelPagamentoContanti.createSequentialGroup()
 										.addGap(158)
@@ -377,9 +410,9 @@ public class PagamentoGUI extends JDialog {
 									.addComponent(textFieldTesseraFedelta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addComponent(labelIva)))
 							.addGroup(gl_panelPagamentoContanti.createSequentialGroup()
-								.addComponent(textPaneTotaleCatra, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textPaneTotaleContanti, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 								.addGap(18)
-								.addComponent(textPaneIvaCarta, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(textPaneIvaContanti, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 						.addGap(227)
 						.addGroup(gl_panelPagamentoContanti.createParallelGroup(Alignment.BASELINE)
 							.addComponent(buttonIndietro, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
@@ -407,9 +440,9 @@ public class PagamentoGUI extends JDialog {
 		}
 	}
 	
-	public void riceviTortale(Pagamento Pagamento) {
+	public void riceviTortale(Pagamento Pagamento, ArrayList<Prodotto> prodotto) {
 		
-		controll.leggiVal(Pagamento, textPaneTotaleCatra);
-	
+		controll.leggiVal(Pagamento, textPaneTotaleCatra, textPaneIvaCarta, textPaneTotaleContanti, textPaneIvaContanti);
+		this.listaProdotti = prodotto;
 }
 }

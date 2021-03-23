@@ -2,6 +2,7 @@ package Classi;
 
 public class Pagamento {
     private double totale;
+    private double iva;
     private String dataAcquisto;
     private int puntiGenerati;
     
@@ -9,6 +10,7 @@ public class Pagamento {
     	this.totale = 0;
     	this.dataAcquisto = null;
     	this.puntiGenerati = 0;
+    	this.iva = 0;
     }
 
     public Pagamento(double totale, String dataAcquisto, int puntiGenerati) {
@@ -25,8 +27,17 @@ public class Pagamento {
     public void setTotale(double totale) {
         this.totale = totale;
     }
+    
 
-    public String getDataAcquisto() {
+    public double getIva() {
+		return iva;
+	}
+
+	public void setIva(double iva) {
+		this.iva = iva;
+	}
+
+	public String getDataAcquisto() {
         return dataAcquisto;
     }
 

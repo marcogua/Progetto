@@ -581,7 +581,8 @@ public class ModificaProdottoGUI extends JDialog {
 			JButton ButtonOk = new JButton("Aggiungi");
 			ButtonOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					controll.rimuoviProdottodalMagazzino(textFieldCodiceprodotto.getText());
+					controll.rimuoviProdottoTabella(textFieldCodiceprodotto.getText());
+
 					String scelta = (String)comboBoxTipo.getSelectedItem();
 					if(scelta.equalsIgnoreCase("Frutta")) {
 						controll.salvaProdottoFrutta(textFieldCodiceprodotto, textFieldDescrizione, textFieldPrezzo, textFieldProvenienza,
@@ -611,7 +612,7 @@ public class ModificaProdottoGUI extends JDialog {
 								textFieldProvenienza,textFieldProduttore,textFieldQuantita,textFieldIva,comboBoxUnita,comboBoxGiornoConf,
 								comboBoxMeseConf,comboBoxAnnoConf,comboBoxGiornoC, comboBoxMeseC,comboBoxAnnoC);
 					}
-					dispose();
+					setVisible(false);
 				}
 			});
 			ButtonOk.setBackground(new Color(204, 204, 204));
