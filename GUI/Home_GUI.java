@@ -46,7 +46,7 @@ public class Home_GUI extends JFrame {
 	private JTextField textFieldCerca;
 	private JTextField textFieldCarta;
 	private JTable tableTesseraPunti;
-	private JTextField textField;
+	private JTextField textFieldCercaProdottoMagaz;
 	private JTable tableMagazzino;
 	private JTextField textFieldCercaOrdinePer;
 	private JTable tableRegistro;
@@ -72,10 +72,10 @@ public class Home_GUI extends JFrame {
 	private JLabel lblTotaleNumero;
 	private ArrayList<Prodotto> carrelloArrayList = new ArrayList<Prodotto>();
 
-
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings("unchecked")
 	public Home_GUI(ControlloreInterfaccia ctrl) {
 		controll = ctrl;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -113,6 +113,7 @@ public class Home_GUI extends JFrame {
 		
 		
 		JPanel BotPanrl = new JPanel();
+		JLabel lblIvaSubTotale = new JLabel("0");
 		
 		JLabel lblNewLabel = new JLabel("Fruttierbivendolo");
 		lblNewLabel.setForeground(Color.WHITE);
@@ -130,8 +131,8 @@ public class Home_GUI extends JFrame {
 		ButtonPaga.setHorizontalAlignment(SwingConstants.RIGHT);
 		ButtonPaga.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero), carrelloArrayList);
-				//controll.pagameto_GUI();
+				controll.Pagamento_GUI(controll.prelevaTotale(lblTotaleNumero, lblIvaSubTotale), carrelloArrayList);
+				controll.svuotaCarello(tableCarrello, carrelloArrayList, lblIvaSubTotale);
 			}
 		});
 		ButtonPaga.setBackground(new Color(204, 204, 204));
@@ -142,7 +143,6 @@ public class Home_GUI extends JFrame {
 		JPanel LeftPanel = new JPanel();
 		LeftPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(LeftPanel, BorderLayout.WEST);
-		
 		JLabel jLabelTotale = new JLabel("Totale: ");
 		jLabelTotale.setForeground(Color.WHITE);
 		panel_7.add(jLabelTotale);
@@ -204,7 +204,7 @@ public class Home_GUI extends JFrame {
 		lblDiCuiIva.setForeground(Color.WHITE);
 		panel_7.add(lblDiCuiIva);
 		
-		JLabel lblIvaSubTotale = new JLabel("0");
+		
 		lblIvaSubTotale.setForeground(Color.WHITE);
 		panel_7.add(lblIvaSubTotale);
 		
@@ -226,9 +226,9 @@ public class Home_GUI extends JFrame {
 		
 		JComboBox comboBoxCercaFruttaPer = new JComboBox();
 		comboBoxCercaFruttaPer.setBackground(new Color(204, 204, 204));
-		comboBoxCercaFruttaPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data raccolata"}));
+		comboBoxCercaFruttaPer.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", 
+				"Produttore/Fornitore", "Provenienza", "Data raccolata"}));
 		panelRicercaFrutta.add(comboBoxCercaFruttaPer);
-		
 		textFieldCercaFruttaPer = new JTextField();
 		panelRicercaFrutta.add(textFieldCercaFruttaPer);
 		textFieldCercaFruttaPer.setColumns(10);
@@ -735,6 +735,7 @@ public class Home_GUI extends JFrame {
 		textFieldQuantitaVerdura.setColumns(10);
 		
 		JButton btnAggiungiAlCarrelloVerdura = new JButton("Aggiungi al carrello");
+		btnAggiungiAlCarrelloVerdura.setBackground(new Color(204, 204, 204));
 		btnAggiungiAlCarrelloVerdura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.aggiungiAlCarelloVerdura(tableVerdura, Double.parseDouble(textFieldQuantitaVerdura.getText()), tableCarrello, carrelloArrayList);
@@ -776,6 +777,7 @@ public class Home_GUI extends JFrame {
 		textFieldQuantitaFarinacei.setColumns(10);
 		
 		JButton btnAggiungiFarinaceiCarrello = new JButton("Aggiungi al carrello");
+		btnAggiungiFarinaceiCarrello.setBackground(new Color(204, 204, 204));
 		btnAggiungiFarinaceiCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.aggiungiAlCarelloFarinacei(tableFarinacei, Double.parseDouble(textFieldQuantitaFarinacei.getText()), tableCarrello, carrelloArrayList);
@@ -817,6 +819,7 @@ public class Home_GUI extends JFrame {
 		textFieldQuantitaLatticini.setColumns(10);
 		
 		JButton btnAggiungiLatticiniCarrello = new JButton("Aggiungi al carrello");
+		btnAggiungiLatticiniCarrello.setBackground(new Color(204, 204, 204));
 		btnAggiungiLatticiniCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.aggiungiAlCarelloLatticini(tableLatticini, Double.parseDouble(textFieldQuantitaLatticini.getText()), tableCarrello, carrelloArrayList);
@@ -859,6 +862,7 @@ public class Home_GUI extends JFrame {
 		textFieldQuantitaUova.setColumns(10);
 		
 		JButton btnAggiungiUovaCarrello = new JButton("Aggiungi al carrello");
+		btnAggiungiUovaCarrello.setBackground(new Color(204, 204, 204));
 		btnAggiungiUovaCarrello.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.aggiungiAlCarelloUova(tableUova, Double.parseDouble(textFieldQuantitaUova.getText()), tableCarrello, carrelloArrayList);
@@ -901,6 +905,7 @@ public class Home_GUI extends JFrame {
 		textFieldQuantitaConfezionati.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Aggiungi al carrello");
+		btnNewButton.setBackground(new Color(204, 204, 204));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controll.aggiungiAlCarelloConfezionati(tableConfezionati, Double.parseDouble(textFieldQuantitaConfezionati.getText()), tableCarrello, carrelloArrayList);
@@ -1292,6 +1297,7 @@ public class Home_GUI extends JFrame {
 		panel_5.add(lblCercaOrdinePer);
 		
 		JComboBox comboBoxCercaOrdinePer = new JComboBox();
+		comboBoxCercaOrdinePer.setBackground(new Color(204, 204, 204));
 		comboBoxCercaOrdinePer.setModel(new DefaultComboBoxModel(new String[] {"Numero ordine", "Data registrazione", "Id lista prodotti", "Codice carta", "Tipo pagamento", "Codice cliente"}));
 		panel_5.add(comboBoxCercaOrdinePer);
 		
@@ -1335,6 +1341,7 @@ public class Home_GUI extends JFrame {
 		panel_5.add(comboBoxOrdinaOrdinePer);
 		
 		JButton btnOrdinaOrdinePer = new JButton("Ordina");
+		btnOrdinaOrdinePer.setBackground(new Color(204, 204, 204));
 		btnOrdinaOrdinePer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxOrdinaOrdinePer.getSelectedItem().toString().compareTo("Numero ordine") == 0) {
@@ -1366,9 +1373,10 @@ public class Home_GUI extends JFrame {
 		panel_5.add(horizontalStrut_14);
 		
 		JButton btnListaProdottiPerId = new JButton("Prodotti");
+		btnListaProdottiPerId.setBackground(new Color(204, 204, 204));
 		btnListaProdottiPerId.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//
+				controll.ListaProdotti_GUI(controll.prelevaIdListSelezionato(tableRegistro));
 			}
 		});
 		panel_5.add(btnListaProdottiPerId);
@@ -1406,20 +1414,25 @@ public class Home_GUI extends JFrame {
 		JLabel labelCercaMagazzino = new JLabel("Cerca Per");
 		panelTopMagazzino.add(labelCercaMagazzino);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setBackground(new Color(204, 204, 204));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione",
+		JComboBox comboBoxCercaProdotto = new JComboBox();
+		comboBoxCercaProdotto.setBackground(new Color(204, 204, 204));
+		comboBoxCercaProdotto.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione",
 				"Provenienza", "Produttore/Fornitore"}));
-		panelTopMagazzino.add(comboBox_2);
+		panelTopMagazzino.add(comboBoxCercaProdotto);
 		
 		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
 		panelTopMagazzino.add(horizontalStrut_1);
 		
-		textField = new JTextField();
-		panelTopMagazzino.add(textField);
-		textField.setColumns(13);
+		textFieldCercaProdottoMagaz = new JTextField();
+		panelTopMagazzino.add(textFieldCercaProdottoMagaz);
+		textFieldCercaProdottoMagaz.setColumns(13);
 		
 		JButton buttonCercaInMagazino = new JButton("Cerca");
+		buttonCercaInMagazino.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controll.verificaCercaProdotto(comboBoxCercaProdotto, tableMagazzino, textFieldCercaProdottoMagaz);
+			}
+		});
 		buttonCercaInMagazino.setBackground(new Color(204, 204, 204));
 		panelTopMagazzino.add(buttonCercaInMagazino);
 		
@@ -1476,11 +1489,16 @@ public class Home_GUI extends JFrame {
 		JLabel labelOrdinaMagazzino = new JLabel("Ordina Per ");
 		panel_4.add(labelOrdinaMagazzino);
 		
-		JComboBox comboBox_3 = new JComboBox();
-		comboBox_3.setBackground(new Color(204, 204, 204));
-		comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione ", "Prezzo  ",
-				"Provenienza ", "Produttore"}));
-		panel_4.add(comboBox_3);
+		JComboBox comboBoxMagazzino = new JComboBox();
+		comboBoxMagazzino.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controll.ordinaProdotti(comboBoxMagazzino, tableMagazzino);
+			}
+		});
+		comboBoxMagazzino.setBackground(new Color(204, 204, 204));
+		comboBoxMagazzino.setModel(new DefaultComboBoxModel(new String[] {"Codice prodotto", "Descrizione", "Prezzo",
+				"Provenienza", "Produttore"}));
+		panel_4.add(comboBoxMagazzino);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		panelCenterMagazzino.add(scrollPane_1, BorderLayout.CENTER);

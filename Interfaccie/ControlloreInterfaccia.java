@@ -43,7 +43,7 @@ public interface ControlloreInterfaccia {
 
 	void modificaProdotto_GUI(Prodotto prodotto);
 
-	void modificaProdotto_GUI(Magazzino magazino);
+	public void ListaProdotti_GUI(String idLista);
 
 	Connection collegamento();
 
@@ -425,7 +425,7 @@ public interface ControlloreInterfaccia {
 
 	void visualizzaTabellaConfezionatiOrdinaPrezzoDesc(JTable tableConfezionati);
 
-	void rimuoviProdottodalMagazzino(String prodotto);
+	//void rimuoviProdottodalMagazzino(String prodotto);
 
 	double calcolaSubTotale(ArrayList<Prodotto> carrello, JLabel subTotale);
 
@@ -448,9 +448,9 @@ public interface ControlloreInterfaccia {
 
 	void visualizzaListaProdotti(JTable tableListaProdotti, String idLista);
 
-	void leggiVal(Pagamento pagamento, JTextPane nome);
+	void leggiVal(Pagamento pagamento,JTextPane totale, JTextPane iva, JTextPane totaleContanti, JTextPane ivaContanti);
 
-	Pagamento prelevaTotale(JLabel valore);
+	Pagamento prelevaTotale(JLabel valore, JLabel iva);
 
 	void calcolaIvaSubTotale(ArrayList<Prodotto> carrello, JLabel lblsubTotaleIva);
 
@@ -493,4 +493,21 @@ public interface ControlloreInterfaccia {
 	void visualizzaTabellaOrdinaBancaRicevente(JTable tableOrdini);
 	
 	void visualizzaTabellaOrdinaSoldiRicevuti(JTable tableOrdini);
+	
+	String prelevaIdListSelezionato(JTable tabella);
+	
+	void ListaProdotti_GUI1();
+	
+	void verificaCercaProdotto(JComboBox selezione,JTable tabella, JTextField nome );
+	
+	void mostraProdottoCodiceProdotto(JTable tabella, JTextField codiceProdotto);
+	
+	void mostraProdottoDescrizione(JTable tabella, JTextField descrizione);
+	
+	void mostraProdottoProvenienza(JTable tabella, JTextField provenienza);
+	
+	void mostraProdottoProduttore(JTable tabella, JTextField produttore);
+	
+	void ordinaProdotti(JComboBox nome, JTable tabella);
+	
 }

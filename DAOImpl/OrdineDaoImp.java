@@ -15,7 +15,7 @@ import Classi.Prodotto;
 import DAO.OrdineDao;
 import DbConfig.DbConnect;
 
-public class OrdineDaoImp implements OrdineDao {
+public class OrdineDaoImp implements OrdineDao  {
 	ArrayList<Ordine> ordine;
 	
 	public OrdineDaoImp() {}
@@ -23,8 +23,8 @@ public class OrdineDaoImp implements OrdineDao {
 	public OrdineDaoImp(ArrayList<Ordine> ordine) {
 		this.ordine = ordine;
 	}
+
 	
-	@Override
 	public ArrayList<Ordine> getAllOrdini(){
 		String sql = "SELECT * FROM registrovendite;";
 		try {

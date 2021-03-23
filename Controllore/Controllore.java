@@ -12,8 +12,10 @@ import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
 import Classi.*;
+import Classi.ListaProdotti;
 import DAO.ClienteDao;
 import DAO.OrdineDao;
+import DAO.ProdottoDao;
 import DAO.TesseraPuntiDAO;
 import DAOImpl.*;
 
@@ -34,6 +36,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	ErroreModifica erroreModifica;
 	ModificaGUI modifica;
 	ModificaProdottoGUI modificaProdotto;
+	ListaProdottiGUI lista;
 	
 	public static void main(String[] args) {
 		ControlloreInterfaccia ilcontrollo = new Controllore();
@@ -50,9 +53,8 @@ public class Controllore implements ControlloreInterfaccia  {
 		erroreModifica = new ErroreModifica(this);
 		modifica = new ModificaGUI(this,null);
 		modificaProdotto = new ModificaProdottoGUI(this);
+		lista = new ListaProdottiGUI(this);
 	}
-	
-
 	
 	@Override
 	public void homeGUI() {
@@ -92,7 +94,6 @@ public class Controllore implements ControlloreInterfaccia  {
 	public void modifica_GUI(Cliente client) {
 			modifica.riceviCliente(client);
 			modifica.setVisible(true);
-		
 	}
 	
 	@Override
@@ -100,7 +101,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		paga.riceviTortale(pagamento, prodotto);
 		paga.setVisible(true);
 	
-}
+	}
 
 	@Override
 	public void modificaProdotto_GUI(Prodotto prodotto) {
@@ -109,9 +110,14 @@ public class Controllore implements ControlloreInterfaccia  {
 	}
 	
 	@Override
-	public void modificaProdotto_GUI(Magazzino magazino) {
-		modificaProdotto.setVisible(true);
-}
+	public void ListaProdotti_GUI(String idLista) {
+		lista.rceviIdLista(idLista);
+		lista.setVisible(true);
+	}
+	
+	public void ListaProdotti_GUI1() {
+		lista.setVisible(true);
+	}
 	
 	@Override
 	public Connection collegamento() {
@@ -130,7 +136,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	}
 	
 	
-	@Override
+	
 	public void mostraClienti(JTable tabella) {
 		Connection conn = this.collegamento();
 		try {
@@ -146,9 +152,8 @@ public class Controllore implements ControlloreInterfaccia  {
 		
 	}
 	
+
 	
-	
-	@Override
 	public void mostraClientiNome(JTable tabella, JTextField nome) {
 		Connection conn = this.collegamento();
 		try {
@@ -659,7 +664,6 @@ public class Controllore implements ControlloreInterfaccia  {
 		try {
 			MagazinoDaoImp magazzino = new MagazinoDaoImp(conn);
 			magazzino.delateProdotto(prodotto);
-
 			conn.close();
 		} catch (SQLException e) {
 			System.out.println("Errore riscontrato nel rimuovere  "
@@ -2131,7 +2135,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		confezionatiDaoImp.modificaTabellaConfezionati(tableConfezionati, confezionatiOrdinati);
 	}
 
-	@Override
+	/*@Override
 	public void rimuoviProdottodalMagazzino(String prodotto) {
 		Connection conn = this.collegamento();
 		try {
@@ -2144,7 +2148,7 @@ public class Controllore implements ControlloreInterfaccia  {
 					+ " il prodotto dal magazzino: "
 					+ e.getMessage());
 		}
-	}
+	}*/
 	
 	@Override
 	public double calcolaSubTotale(ArrayList<Prodotto> carrello, JLabel subTotale) {
@@ -2253,20 +2257,24 @@ public class Controllore implements ControlloreInterfaccia  {
 	public void visualizzaListaProdotti(JTable tableListaProdotti, String idLista){
 		ArrayList<Prodotto> listaProdotti = new ArrayList<Prodotto>();
 		ListaProdottiDaoImp listaprodottidaoimp = new ListaProdottiDaoImp();
-		listaProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista);
+		listaProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista, listaProdotti);
 		listaprodottidaoimp.modificaTabellaListaProdotti(tableListaProdotti, listaProdotti);
 	}
 	
 	@Override
-	public void leggiVal(Pagamento pagamento,JTextPane nome) {
-		nome.setText(Double.toString(pagamento.getTotale()));
+	public void leggiVal(Pagamento pagamento,JTextPane totale, JTextPane iva, JTextPane totaleContanti, JTextPane ivaContanti) {
+		totale.setText(Double.toString(pagamento.getTotale()));
+		iva.setText(Double.toString(pagamento.getIva()));
+		totaleContanti.setText(Double.toString(pagamento.getTotale()));
+		ivaContanti.setText(Double.toString(pagamento.getIva()));	
 	}
 	
 	@Override
-	public Pagamento prelevaTotale(JLabel valore) {
+	public Pagamento prelevaTotale(JLabel valore, JLabel iva) {
 		Pagamento pagamento = new Pagamento();
 		
 		pagamento.setTotale(Double.parseDouble(valore.getText()));
+		pagamento.setIva(Double.parseDouble(iva.getText()));;
 		
 		return pagamento;
 	}
@@ -2284,7 +2292,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	@Override
 	public void visualizzaTabellaRegistroVendite(JTable tableRegistroVendite) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.getAllOrdini();
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
@@ -2292,7 +2300,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	public void visualizzaTabellaListaProdotti(JTable tableListaProdotti, String idLista) {
 		ArrayList<Prodotto> arrayListProdotti = new ArrayList<Prodotto>();
 		ListaProdottiDaoImp listaprodottidaoimp = new ListaProdottiDaoImp(arrayListProdotti);
-		arrayListProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista);
+		arrayListProdotti = listaprodottidaoimp.getListaProdottiByIdLista(idLista, arrayListProdotti);
 		listaprodottidaoimp.modificaTabellaListaProdotti(tableListaProdotti, arrayListProdotti);
 	}
 	
@@ -2306,7 +2314,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	
 	public void sottraiQuantitaProdottiVenduti(ArrayList<Prodotto> listaProdotti) {
 		Prodotto prodotti = new Prodotto();
-		ProdottoDaoImp prodottiDaoImp = new ProdottoDaoImp();
+		ProdottoDao prodottiDaoImp = new ProdottoDaoImp();
 		for (Prodotto prodotto : listaProdotti) {
 			prodotti = prodottiDaoImp.getProdottoByCodiceProdotto(prodotto.getCodiceProdotto());
 			prodotti.setQuantita(prodotti.getQuantita() - prodotto.getQuantita());
@@ -2316,28 +2324,28 @@ public class Controllore implements ControlloreInterfaccia  {
 	//Da inserire nell'iterface
 	public void visualizzaTabellaRegistroVenditeCercaPerNumeroOrdine(JTable tableRegistroVendite, String numeroOrdine) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.cercaPerIdOrdine(numeroOrdine);
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
 	
 	public void visualizzaTabellaRegistroVenditeCercaPerDataRegistrazione(JTable tableRegistroVendite, String dataRegistrazione) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.cercaPerDataRegistrazione(dataRegistrazione);
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
 	
 	public void visualizzaTabellaRegistroVenditeCercaPerIdListaProdotti(JTable tableRegistroVendite, String idLista) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.cercaPerIdLista(idLista);
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
 	
 	public void visualizzaTabellaRegistroVenditeCercaPerCodiceCarta(JTable tableRegistroVendite, String codiceCarta) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.cercaPerCodiceCarta(codiceCarta);
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
@@ -2351,7 +2359,7 @@ public class Controllore implements ControlloreInterfaccia  {
 	*/
 	public void visualizzaTabellaRegistroVenditeCercaPerCodiceCliente(JTable tableRegistroVendite, String codiceCliente) {
 		ArrayList<Ordine> ordiniArrayList = new ArrayList<Ordine>();
-		OrdineDaoImp ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
+		DAO.OrdineDao ordinedaoimp = new OrdineDaoImp(ordiniArrayList);
 		ordiniArrayList = ordinedaoimp.cercaPerCodiceCliente(codiceCliente);
 		ordinedaoimp.modificaTabellaOrdine(tableRegistroVendite, ordiniArrayList);
 	}
@@ -2360,9 +2368,9 @@ public class Controllore implements ControlloreInterfaccia  {
 		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
 		for (int i = 0; i < tableOrdini.getRowCount(); i++) {
 			ordini.add(new Ordine(tableOrdini.getValueAt(i, 0).toString(), Double.parseDouble(tableOrdini.getValueAt(i, 2).toString()),
-					tableOrdini.getValueAt(i, 1).toString(), tableOrdini.getValueAt(i, 8).toString(), tableOrdini.getValueAt(i, 3).toString(),
-					tableOrdini.getValueAt(i, 7).toString(), tableOrdini.getValueAt(i, 5).toString(),Double.parseDouble(tableOrdini.getValueAt(i, 4).toString()),
-					tableOrdini.getValueAt(i, 6).toString()));
+			tableOrdini.getValueAt(i, 1).toString(), tableOrdini.getValueAt(i, 8).toString(), tableOrdini.getValueAt(i, 3).toString(),
+			tableOrdini.getValueAt(i, 7).toString(), tableOrdini.getValueAt(i, 5).toString(),Double.parseDouble(tableOrdini.getValueAt(i, 4).toString()),
+			tableOrdini.getValueAt(i, 6).toString()));
 		}
 		return ordini;
 	}
@@ -2372,7 +2380,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniNumeroOrdine(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2381,7 +2389,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniTotaleOrdine(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2390,7 +2398,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniDataRegistrazione(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2399,7 +2407,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniCodiceCliente(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2408,7 +2416,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniCodiceTessera(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2417,7 +2425,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniIdLista(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2426,7 +2434,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniTipoPagamento(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2435,7 +2443,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniCodiceCarta(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2444,7 +2452,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniBancaRicevente(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
 	
@@ -2453,8 +2461,102 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordiniOrdinati = tableToArrayListOrdine(tableOrdini);
 		Ordine tmp = new Ordine();
 		tmp.OrdinaOrdiniSoldiRicevuti(ordiniOrdinati);
-		OrdineDaoImp ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
+		DAO.OrdineDao ordineDaoImp = new OrdineDaoImp(ordiniOrdinati);
 		ordineDaoImp.modificaTabellaOrdine(tableOrdini, ordiniOrdinati);
 	}
+	
+	public String prelevaIdListSelezionato(JTable tabella) {
+		String idLista;
+		DefaultTableModel model = (DefaultTableModel)tabella.getModel();
+		
+		idLista = model.getValueAt(tabella.getSelectedRow(), 3).toString();
+		
+		return idLista;
+	}
+	
+	public void verificaCercaProdotto(JComboBox selezione,JTable tabella, JTextField nome ) {
+		String valore = (String)selezione.getSelectedItem();
+
+			if (valore.equalsIgnoreCase("codice Prodotto")) {
+				this.mostraProdottoCodiceProdotto(tabella, nome);
+			} else if (valore.equalsIgnoreCase("Descrizione")) {
+				this.mostraProdottoDescrizione(tabella, nome);
+			} else if (valore.equalsIgnoreCase("Provenienza")) {
+				this.mostraProdottoProvenienza(tabella, nome);
+			} else{
+				this.mostraProdottoProduttore(tabella, nome);
+			}
+	}
+	
+	public void mostraProdottoCodiceProdotto(JTable tabella, JTextField codiceProdotto) {
+		Connection conn = this.collegamento();
+		try {
+			MagazinoDaoImp magaz = new MagazinoDaoImp(conn);
+			magaz.leggiMagazzinoPerCodiceProdotto(tabella,codiceProdotto );
+			
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Errore riscontrato nella mostrare "
+					+ " i prodotti per codice prodotto: "
+					+ e.getMessage());
+		}
+		
+	}
+	
+	public void mostraProdottoDescrizione(JTable tabella, JTextField descrizione) {
+		Connection conn = this.collegamento();
+		try {
+			MagazinoDaoImp magaz = new MagazinoDaoImp(conn);
+			magaz.leggiMagazzinoPerDescrizione(tabella,descrizione );
+			
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Errore riscontrato nella mostrare "
+					+ " i prodotti per descrizione: "
+					+ e.getMessage());
+		}
+		
+	}
+	
+	public void mostraProdottoProvenienza(JTable tabella, JTextField provenienza) {
+		Connection conn = this.collegamento();
+		try {
+			MagazinoDaoImp magaz = new MagazinoDaoImp(conn);
+			magaz.leggiMagazzinoPerProvenienza(tabella,provenienza );
+			
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Errore riscontrato nella mostrare "
+					+ " i prodotti per provenienza: "
+					+ e.getMessage());
+		}
+	}
+	
+	public void mostraProdottoProduttore(JTable tabella, JTextField produttore) {
+		Connection conn = this.collegamento();
+		try {
+			MagazinoDaoImp magaz = new MagazinoDaoImp(conn);
+			magaz.leggiMagazzinoPerProduttore(tabella,produttore );
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Errore riscontrato nella mostrare "
+					+ " i prodotti per produttore: "
+					+ e.getMessage());
+		}
+	}
+	
+	public void ordinaProdotti(JComboBox combo, JTable tabella) {
+		Connection conn = this.collegamento();
+		try {
+			MagazinoDaoImp magazzino = new MagazinoDaoImp(conn);
+			magazzino.Ordinamento(combo, tabella);
+			
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println("Errore riscontrato nell'ordinare "
+					+ " i prodotti : " + e.getMessage());
+		}
+	}
+	
 }
 

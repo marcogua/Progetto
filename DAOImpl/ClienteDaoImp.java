@@ -30,8 +30,6 @@ public class ClienteDaoImp implements ClienteDao  {
         getClientiPerCliente = connection.prepareStatement("SELECT * FROM clienti WHERE codiceclienti like ?");
         insertClientiPS = connection.prepareStatement("INSERT INTO clienti VALUES (?, ?, ?, ?, ?)");
         delateClientiPS = connection.prepareStatement("DELETE FROM clienti WHERE codiceclienti like ?");
-        
-        
     } 
     
     public ClienteDaoImp() {}

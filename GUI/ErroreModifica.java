@@ -22,20 +22,6 @@ public class ErroreModifica extends JDialog {
 	private ControlloreInterfaccia controll;
 
 	/**
-	 * Launch the application.
-	 
-	public static void main(String[] args) {
-		try {
-			ErroreModifica dialog = new ErroreModifica();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	*/
-
-	/**
 	 * Create the dialog.
 	 */
 	public ErroreModifica(ControlloreInterfaccia ctrl) {

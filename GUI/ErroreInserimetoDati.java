@@ -59,74 +59,14 @@ public class ErroreInserimetoDati extends JDialog {
 		}
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setFont(new Font("Tahoma", Font.BOLD, 20));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
-			}
-			{
-				Component horizontalStrut = Box.createHorizontalStrut(20);
-				buttonPane.add(horizontalStrut);
 			}
 		}
 	}
