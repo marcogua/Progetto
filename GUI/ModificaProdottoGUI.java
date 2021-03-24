@@ -46,7 +46,7 @@ public class ModificaProdottoGUI extends JDialog {
 
 	/**
 	 * Create the dialog.
-	 */
+	*/
 	public ModificaProdottoGUI(ControlloreInterfaccia ctrl) {
 		setResizable(false);
 		controll = ctrl;
@@ -582,8 +582,8 @@ public class ModificaProdottoGUI extends JDialog {
 			ButtonOk.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					controll.rimuoviProdottoTabella(textFieldCodiceprodotto.getText());
-
 					String scelta = (String)comboBoxTipo.getSelectedItem();
+					
 					if(scelta.equalsIgnoreCase("Frutta")) {
 						controll.salvaProdottoFrutta(textFieldCodiceprodotto, textFieldDescrizione, textFieldPrezzo, textFieldProvenienza,
 								textFieldProduttore, textFieldQuantita,textFieldIva, comboBoxUnita, comboBoxGiorno, comboBoxMese, comboBoxAnno);

@@ -21,20 +21,16 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
-
 import javax.swing.Box;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
-
 import Classi.Prodotto;
 import Interfaccie.ControlloreInterfaccia;
-
 import javax.swing.event.AncestorListener;
 import javax.swing.event.AncestorEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
 
@@ -78,8 +74,9 @@ public class Home_GUI extends JFrame {
 	@SuppressWarnings("unchecked")
 	public Home_GUI(ControlloreInterfaccia ctrl) {
 		controll = ctrl;
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 20, 1400, 720);
+		//setBounds(50, 20, 1400, 720);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(153, 153, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,13 +84,26 @@ public class Home_GUI extends JFrame {
 		setMinimumSize(new Dimension(1400, 720));
 		setContentPane(contentPane);
 		
+		JLayeredPane layeredPane = new JLayeredPane();
+		contentPane.add(layeredPane, BorderLayout.CENTER);
+		layeredPane.setLayout(new CardLayout(0, 0));
+		
 		JPanel TopPanel = new JPanel();
 		TopPanel.setBackground(new Color(153, 153, 153));
 		contentPane.add(TopPanel, BorderLayout.NORTH);
 		
-		JLayeredPane layeredPane = new JLayeredPane();
-		contentPane.add(layeredPane, BorderLayout.CENTER);
-		layeredPane.setLayout(new CardLayout(0, 0));
+		JPanel panelStart = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panelStart.getLayout();
+		flowLayout_1.setVgap(200);
+		panelStart.setForeground(new Color(255, 255, 255));
+		panelStart.setBackground(new Color(204, 204, 204));
+		layeredPane.add(panelStart, "name_40075786018300");
+		
+		
+		layeredPane.removeAll();
+        layeredPane.add(panelStart);
+        layeredPane.repaint();
+        layeredPane.revalidate();
 		
 		JPanel prodottiPanel = new JPanel();
 		layeredPane.add(prodottiPanel, "name_97844091228400");
@@ -155,6 +165,10 @@ public class Home_GUI extends JFrame {
 		panelButtonsCarrello.setBackground(new Color(153, 153, 153));
 		panelCarrello.add(panelButtonsCarrello, BorderLayout.NORTH);
 		
+		JPanel Magazzinopanel = new JPanel();
+		layeredPane.add(Magazzinopanel, "name_177644219078600");
+		Magazzinopanel.setLayout(new BorderLayout(0, 0));
+		
 		Component horizontalStrut_5 = Box.createHorizontalStrut(20);
 		panelButtonsCarrello.add(horizontalStrut_5);
 		
@@ -211,6 +225,8 @@ public class Home_GUI extends JFrame {
 		JLayeredPane layeredPaneGruttpoProdotti = new JLayeredPane();
 		panelProdottiMain.add(layeredPaneGruttpoProdotti, BorderLayout.CENTER);
 		layeredPaneGruttpoProdotti.setLayout(new BorderLayout(0, 0));
+		
+		
 		
 		JLayeredPane layeredPaneRicerche = new JLayeredPane();
 		layeredPaneGruttpoProdotti.add(layeredPaneRicerche, BorderLayout.NORTH);
@@ -710,11 +726,31 @@ public class Home_GUI extends JFrame {
 		tableFrutta = new JTable();
 		tableFrutta.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenineza", "Data raccolata", "Quantita", "Unita", "Prezzo", "Iva"
+				"Codice prodotto", "Descrizione", "Produttore", "Provenineza", "Data raccolata", "Quantita", "Unita", "Prezzo", "Iva"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableFrutta.getColumnModel().getColumn(0).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(0).setPreferredWidth(158);
+		tableFrutta.getColumnModel().getColumn(1).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(2).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(2).setPreferredWidth(117);
+		tableFrutta.getColumnModel().getColumn(3).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(4).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(4).setPreferredWidth(96);
+		tableFrutta.getColumnModel().getColumn(5).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(6).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(7).setResizable(false);
+		tableFrutta.getColumnModel().getColumn(8).setResizable(false);
 		scrollPaneFrutta.setViewportView(tableFrutta);
 		
 		JPanel panelTabellaVerdura = new JPanel();
@@ -752,11 +788,33 @@ public class Home_GUI extends JFrame {
 		tableVerdura = new JTable();
 		tableVerdura.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data raccolta", "Quantita", "Unita", "Prezzo", "Iva"
+				"Codice prodotto", "Descrizione", "Produttore", "Provenienza", "Data raccolta", "Quantita", "Unita", "Prezzo", "Iva"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableVerdura.getColumnModel().getColumn(0).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(0).setPreferredWidth(176);
+		tableVerdura.getColumnModel().getColumn(1).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(1).setPreferredWidth(85);
+		tableVerdura.getColumnModel().getColumn(2).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(2).setPreferredWidth(104);
+		tableVerdura.getColumnModel().getColumn(3).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(3).setPreferredWidth(87);
+		tableVerdura.getColumnModel().getColumn(4).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(4).setPreferredWidth(104);
+		tableVerdura.getColumnModel().getColumn(5).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(6).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(7).setResizable(false);
+		tableVerdura.getColumnModel().getColumn(8).setResizable(false);
 		scrollPaneVerdura.setViewportView(tableVerdura);
 		
 		JPanel panelTabellaFarinacei = new JPanel();
@@ -794,11 +852,33 @@ public class Home_GUI extends JFrame {
 		tableFarinacei = new JTable();
 		tableFarinacei.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data scadenza", "Quantita", "Unita", "Prezzo", "Iva"
+				"Codice prodotto", "Descrizione", "Produttore", "Provenienza", "Data scadenza", "Quantita", "Unita", "Prezzo", "Iva"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableFarinacei.getColumnModel().getColumn(0).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(0).setPreferredWidth(141);
+		tableFarinacei.getColumnModel().getColumn(1).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(1).setPreferredWidth(116);
+		tableFarinacei.getColumnModel().getColumn(2).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(2).setPreferredWidth(95);
+		tableFarinacei.getColumnModel().getColumn(3).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(3).setPreferredWidth(96);
+		tableFarinacei.getColumnModel().getColumn(4).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(4).setPreferredWidth(97);
+		tableFarinacei.getColumnModel().getColumn(5).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(6).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(7).setResizable(false);
+		tableFarinacei.getColumnModel().getColumn(8).setResizable(false);
 		scrollPaneFarinacei.setViewportView(tableFarinacei);
 		
 		JPanel panelTabellaLatticini = new JPanel();
@@ -836,12 +916,37 @@ public class Home_GUI extends JFrame {
 		tableLatticini = new JTable();
 		tableLatticini.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"Codice prodotto", "Descrizione", "Produttore/Fornitore", "Provenienza", "Data mungitura", "Data produzione",
-					"Senza lattosio", "Quantita", "Unita", "Prezzo", "Iva"
+				"Codice prodotto", "Descrizione", "Produttore", "Provenienza", "Data mungitura", "Data produzione", "Senza lattosio", "Quantita", "Unita", "Prezzo", "Iva"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		tableLatticini.getColumnModel().getColumn(0).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(0).setPreferredWidth(144);
+		tableLatticini.getColumnModel().getColumn(1).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(1).setPreferredWidth(88);
+		tableLatticini.getColumnModel().getColumn(2).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(2).setPreferredWidth(93);
+		tableLatticini.getColumnModel().getColumn(3).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(3).setPreferredWidth(92);
+		tableLatticini.getColumnModel().getColumn(4).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(4).setPreferredWidth(111);
+		tableLatticini.getColumnModel().getColumn(5).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(5).setPreferredWidth(113);
+		tableLatticini.getColumnModel().getColumn(6).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(6).setPreferredWidth(110);
+		tableLatticini.getColumnModel().getColumn(7).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(8).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(9).setResizable(false);
+		tableLatticini.getColumnModel().getColumn(10).setResizable(false);
 		scrollPaneLatticini.setViewportView(tableLatticini);
 		
 		JPanel panelTabellaUova = new JPanel();
@@ -1403,9 +1508,6 @@ public class Home_GUI extends JFrame {
 		));
 		scrollPane_2.setViewportView(tableRegistro);
 		
-		JPanel Magazzinopanel = new JPanel();
-		layeredPane.add(Magazzinopanel, "name_177644219078600");
-		Magazzinopanel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTopMagazzino = new JPanel();
 		panelTopMagazzino.setBackground(new Color(153, 153, 153));
@@ -1532,6 +1634,13 @@ public class Home_GUI extends JFrame {
 		tableMagazzino.getColumnModel().getColumn(6).setPreferredWidth(92);
 		scrollPane_1.setViewportView(tableMagazzino);
 		
+		
+		JLabel labelMessaggio = new JLabel("SELEZIONARE UN OPZIONE PER INIZIARE");
+		labelMessaggio.setHorizontalAlignment(SwingConstants.CENTER);
+		labelMessaggio.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		labelMessaggio.setForeground(new Color(0, 0, 0));
+		panelStart.add(labelMessaggio);
+		
 		JButton ButtonProdotti = new JButton("Prodotti");
 		ButtonProdotti.setBackground(new Color(204, 204, 204));
 		ButtonProdotti.setFocusPainted(false);
@@ -1542,6 +1651,7 @@ public class Home_GUI extends JFrame {
                 layeredPane.add(prodottiPanel);
                 layeredPane.repaint();
                 layeredPane.revalidate();
+                controll.visualizzaTabellaFrutta(tableFrutta);
 			} 
 		});
 		
@@ -1631,6 +1741,11 @@ public class Home_GUI extends JFrame {
 		LeftPanel.setLayout(gl_LeftPanel);
 		
 		
+	}
+	private static class __Tmp {
+		private static void __tmp() {
+			  javax.swing.JPanel __wbp_panel = new javax.swing.JPanel();
+		}
 	}
 }
 

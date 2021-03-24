@@ -108,6 +108,7 @@ public class AggiungiProdottoGUI extends JDialog {
 		panelUova.add(jlabelClasseUova);
 
 		JComboBox comboBoxClasseUova = new JComboBox();
+		comboBoxClasseUova.setBackground(new Color(204, 204, 204));
 		comboBoxClasseUova.setModel(new DefaultComboBoxModel(new String[] {"Seleziona classe", "XL", "L", "M", "S"}));
 		comboBoxClasseUova.setBounds(227, 68, 214, 22);
 		panelUova.add(comboBoxClasseUova);
@@ -117,6 +118,7 @@ public class AggiungiProdottoGUI extends JDialog {
 		panelUova.add(jlabelCategoria);
 
 		JComboBox comboBoxCategoriaU = new JComboBox();
+		comboBoxCategoriaU.setBackground(new Color(204, 204, 204));
 		comboBoxCategoriaU.setModel(new DefaultComboBoxModel(new String[] {"Seleziona categoria", "A", "B", "C"}));
 		comboBoxCategoriaU.setBounds(227, 153, 214, 22);
 		panelUova.add(comboBoxCategoriaU);
@@ -126,17 +128,20 @@ public class AggiungiProdottoGUI extends JDialog {
 		panelUova.add(jlabelDataraccolta);
 
 		JComboBox comboBoxGiornoU = new JComboBox();
+		comboBoxGiornoU.setBackground(new Color(204, 204, 204));
 		comboBoxGiornoU.setModel(new DefaultComboBoxModel(new String[] {"GG", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13",
 				"14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		comboBoxGiornoU.setBounds(227, 237, 53, 22);
 		panelUova.add(comboBoxGiornoU);
 
 		JComboBox comboBoxMeseU = new JComboBox();
+		comboBoxMeseU.setBackground(new Color(204, 204, 204));
 		comboBoxMeseU.setModel(new DefaultComboBoxModel(new String[] {"MM", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		comboBoxMeseU.setBounds(305, 237, 53, 22);
 		panelUova.add(comboBoxMeseU);
 
 		JComboBox comboBoxAnnoU = new JComboBox();
+		comboBoxAnnoU.setBackground(new Color(204, 204, 204));
 		comboBoxAnnoU.setModel(new DefaultComboBoxModel(new String[] {"AAAA", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028"}));
 		comboBoxAnnoU.setBounds(379, 237, 62, 22);
 		panelUova.add(comboBoxAnnoU);
