@@ -511,9 +511,9 @@ public class Controllore implements ControlloreInterfaccia  {
 
 			String data = ((String)giorno.getSelectedItem())+"-"+((String)mese.getSelectedItem()) +
 					"-"+((String)anno.getSelectedItem());
-
-			uovaDao.addUova(codiceprodotto.getText(),data,(String)categoriaUova.getSelectedItem(),(String)classe.getSelectedItem() );
+			
 			mag.aggiungiProdotto(codiceprodotto,descrizione,prezzo,provenienza,produttore,quantita,iva,unita);
+			uovaDao.addUova(codiceprodotto.getText(),data,(String)categoriaUova.getSelectedItem(),(String)classe.getSelectedItem() );
 
 			conn.close();
 		} catch (SQLException e) {
@@ -672,7 +672,6 @@ public class Controllore implements ControlloreInterfaccia  {
 		}
 	}
 	
-
 	@Override
 	public void visualizzaTabellaFrutta(JTable tabellaFrutta){
 		ArrayList<Frutta> fruttaArrayList = new ArrayList<>();
@@ -2557,6 +2556,7 @@ public class Controllore implements ControlloreInterfaccia  {
 					+ " i prodotti : " + e.getMessage());
 		}
 	}
+	
 	
 }
 

@@ -20,7 +20,7 @@ import java.sql.Connection;
 public class MagazinoDaoImp {
 	private Connection connection;
 	private PreparedStatement getAllMagazzino,getAllMagazzinoCodiceProdotto,getAllMagazzinoDescrizione,getAllMagazzinoProvenienza,
-	getAllMagazzinoProduttore,insertProdotto, delateProdotto, ordinaMagazzino;
+	getAllMagazzinoProduttore,insertProdotto, delateProdotto,aggiornaProdotto, ordinaMagazzino;
 	
 	
 	public MagazinoDaoImp(Connection connection) throws SQLException {
@@ -30,8 +30,11 @@ public class MagazinoDaoImp {
 		getAllMagazzinoDescrizione =connection.prepareStatement("SELECT * FROM prodotto WHERE descrizione ilike ?");
 		getAllMagazzinoProvenienza =connection.prepareStatement("SELECT * FROM prodotto WHERE provenienza ilike ?");
 		getAllMagazzinoProduttore = connection.prepareStatement("SELECT * FROM prodotto WHERE produttorefornitore ilike ?");
-		insertProdotto = connection.prepareStatement("INSERT INTO prodotto(codiceprodotto, descrizione, prezzo, provenienza, produttorefornitore, quantita, unita, iva)	VALUES (?, ?, ?, ?, ?, ?, ?,?)");
+		insertProdotto = connection.prepareStatement("INSERT INTO prodotto(codiceprodotto, descrizione, prezzo, provenienza, produttorefornitore, quantita, unita, iva)	"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?,?)");
 		delateProdotto = connection.prepareStatement("DELETE FROM prodotto WHERE codiceprodotto ilike ?");
+		aggiornaProdotto = connection.prepareStatement("UPDATE prodotto SET codiceprodotto = ?, descrizione = ?, prezzo = ?, provenienza = ?, produttorefornitore = ?,"
+				+ "quantita = ?, unità = ?,iva = ? WHERE codiceprodotto ilike ?");
 	}
 	
 	public ArrayList<Magazzino> getAllMagazzino(ArrayList<Magazzino> magazzino) throws SQLException {
@@ -135,6 +138,7 @@ public class MagazinoDaoImp {
 		int row = insertProdotto.executeUpdate();
 		return row;
     }
+	
 	
 	public int delateProdotto(String valore) throws SQLException{
 		delateProdotto.setString(1,  valore);
