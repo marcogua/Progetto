@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Classi.Cliente;
-import Classi.GenerateId;
+import Classi.GenerateCode;
 import Classi.Prodotto;
 import Interfaccie.ControlloreInterfaccia;
 
@@ -237,24 +237,25 @@ public class ModificaProdottoGUI extends JDialog {
 		buttonGenera.setFocusPainted(false);
 		buttonGenera.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				GenerateCode codice = new GenerateCode();
 				String sc = (String)comboBoxTipo.getSelectedItem();
 				if(sc.equalsIgnoreCase("Frutta")){
-					textFieldCodiceprodotto.setText(GenerateId.generatoreFrutta());
+					textFieldCodiceprodotto.setText(codice.generatoreFrutta());
 				}
 				else if(sc.equalsIgnoreCase("Verdura")){
-					textFieldCodiceprodotto.setText(GenerateId.generatoreVerdura());
+					textFieldCodiceprodotto.setText(codice.generatoreVerdura());
 				}
 				else if(sc.equalsIgnoreCase("Uova")){
-					textFieldCodiceprodotto.setText(GenerateId.generatoreUova());
+					textFieldCodiceprodotto.setText(codice.generatoreUova());
 				}
 				else if(sc.equalsIgnoreCase("Latticini")){
-					textFieldCodiceprodotto.setText(GenerateId.generatoreLatticini());
+					textFieldCodiceprodotto.setText(codice.generatoreLatticini());
 				}
 				else if(sc.equalsIgnoreCase("Farinacei")){
-					textFieldCodiceprodotto.setText(GenerateId.generatoreFarinacei());
+					textFieldCodiceprodotto.setText(codice.generatoreFarinacei());
 				}
 				else{
-					textFieldCodiceprodotto.setText(GenerateId.generatoreConfezionati());
+					textFieldCodiceprodotto.setText(codice.generatoreConfezionati());
 				}
 
 			}

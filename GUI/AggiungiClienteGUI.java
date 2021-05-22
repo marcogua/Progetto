@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Controllore.Controllore;
-import Classi.GenerateId;
+import Classi.GenerateCode;
 import javax.swing.JLabel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -101,8 +101,9 @@ public class AggiungiClienteGUI extends JDialog {
 			JButton buttonCodici = new JButton("Genera Codici");
 			buttonCodici.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					textFieldCodiceTessera.setText(GenerateId.generatoreCodiceTessera());
-					textFieldCodiceCliente.setText(GenerateId.generatoreCodiceCliente());
+					GenerateCode clientCode = new GenerateCode();
+					textFieldCodiceTessera.setText(clientCode.generatoreCodiceTessera());
+					textFieldCodiceCliente.setText(clientCode.generatoreCodiceCliente());
 				}
 			});
 			buttonCodici.setBackground(new Color(204, 204, 204));

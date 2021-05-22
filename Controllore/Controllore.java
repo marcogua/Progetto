@@ -2213,7 +2213,8 @@ public class Controllore implements ControlloreInterfaccia  {
 		OrdineDao ordinedaoimp = new OrdineDaoImp();
 		Carta carta = new Carta();
 		ClienteDaoImp clientedaoimp = new ClienteDaoImp();
-		String idLista = GenerateId.generatoreListaProdotti();
+		GenerateCode codice = new GenerateCode();
+		String idLista = codice.generatoreListaProdotti();
 		carta.setCodiceCarta(codiceCarta.getText());
 		ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(codiceTessera.getText()));
 		ordine.setTipoPagamento("carta");
@@ -2223,7 +2224,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		ordine.setDataRegistrazione(LocalDate.now().format(formatter).toString());
 		System.out.println(ordine.getDataRegistrazione());
-		ordine.setNumeroOrdine(GenerateId.generatoreOrdine());
+		ordine.setNumeroOrdine(codice.generatoreOrdine());
 		ordine.setTotaleOrdine(Double.parseDouble(totaleCarta.getText()));
 		ordine.setBancaRicevente("SanPaolo");
 		aggiungiListaProdotti(listaProdotti, idLista);
@@ -2235,8 +2236,9 @@ public class Controllore implements ControlloreInterfaccia  {
 		Ordine ordine = new Ordine();
 		OrdineDao ordinedaoimp = new OrdineDaoImp();
 		Contanti contanti = new Contanti();
+		GenerateCode codice = new GenerateCode();
 		ClienteDaoImp clientedaoimp = new ClienteDaoImp();
-		String idLista = GenerateId.generatoreListaProdotti();
+		String idLista = codice.generatoreListaProdotti();
 		contanti.setSoldiRicevuti(Double.parseDouble(textFieldContantiDati.getText()));
 		ordine.setCodiceCliente(clientedaoimp.cercaCodiceCliente(codiceTessera.getText()));
 		ordine.setTipoPagamento("contanti");
@@ -2245,7 +2247,7 @@ public class Controllore implements ControlloreInterfaccia  {
 		ordine.setCodiceCarta("");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		ordine.setDataRegistrazione(LocalDate.now().format(formatter).toString());
-		ordine.setNumeroOrdine(GenerateId.generatoreOrdine());
+		ordine.setNumeroOrdine(codice.generatoreOrdine());
 		ordine.setTotaleOrdine(Double.parseDouble(textPaneTotaleContanti.getText()));
 		ordine.setSoldiRicevuti(contanti.getSoldiRicevuti());
 		aggiungiListaProdotti(listaProdotti, idLista);
