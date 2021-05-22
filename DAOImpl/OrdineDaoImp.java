@@ -25,6 +25,7 @@ public class OrdineDaoImp implements OrdineDao  {
 	}
 
 	
+	@Override
 	public ArrayList<Ordine> getAllOrdini(){
 		String sql = "SELECT * FROM registrovendite;";
 		try {
