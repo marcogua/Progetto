@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DbConnect {
 	private static DbConnect istanza = null;
 	private Connection conn = null;
-	private static final String URL ="jdbc:postgresql://localhost:5432/Progetto";
+	private static final String URL ="jdbc:postgresql://localhost:5432/DatabaseVittorio";
 	private static final String USERNAME="postgres";
 	private static final String PASSWORD = "toor";
 	
